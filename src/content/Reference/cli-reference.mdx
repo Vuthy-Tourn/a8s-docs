@@ -1,0 +1,214 @@
+---
+title: CLI Reference
+description: Control the full platform from your terminal — deploy, rollback, stream logs, and manage secrets without touching the UI.
+---
+
+import { Callout, Tabs } from 'nextra/components'
+
+# CLI Reference
+
+The Autonomous CLI (`a8s`) lets you control the full platform from your terminal. Every operation available in the web dashboard is also available via CLI.
+
+---
+
+## Installation
+
+<Tabs items={['npm', 'curl']}>
+  <Tabs.Tab>
+    ```bash
+    npm install -g @autonomous/cli
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```bash
+    curl -fsSL https://get.autonomous.dev | sh
+    ```
+  </Tabs.Tab>
+</Tabs>
+
+Verify the installation:
+
+```bash
+a8s --version
+```
+
+---
+
+## Authentication
+
+```bash
+# Log in to your Autonomous instance
+a8s login
+
+# Log out and clear local token
+a8s logout
+```
+
+<Callout type="info">
+  After login, your JWT token is stored locally and used to authorize all subsequent CLI commands. The token respects the same session expiry as the web dashboard.
+</Callout>
+
+---
+
+## Project Management
+
+```bash
+# Create a new project
+a8s project create <project-name>
+
+# List all your projects
+a8s project list
+
+# View details of a specific project
+a8s project info <project-name>
+
+# Delete a project (cascades — removes all deployments, configs, secrets)
+a8s project delete <project-name>
+```
+
+---
+
+## Deployments
+
+```bash
+# Deploy the current directory
+a8s deploy .
+
+# Deploy to a specific environment
+a8s deploy . --env staging
+
+# Deploy from a specific path
+a8s deploy ./my-app --env production
+
+# Redeploy the current version (no code change needed)
+a8s redeploy <project-name>
+
+# Roll back to a previous version
+a8s rollback <project-name> --version <version-number>
+
+# View deployment history
+a8s deployments list <project-name>
+```
+
+---
+
+## Logs
+
+```bash
+# Stream live logs from a project
+a8s logs <project-name>
+
+# Filter logs by service (for microservice projects)
+a8s logs <project-name> --service <service-name>
+
+# View historical logs with a time filter
+a8s logs <project-name> --since 1h
+
+# View logs from a specific pod
+a8s logs <project-name> --pod <pod-name>
+```
+
+---
+
+## Environment Variables
+
+```bash
+# Set an environment variable for a specific environment
+a8s env set <project-name> KEY=VALUE --env production
+
+# Set multiple variables at once
+a8s env set <project-name> KEY1=VALUE1 KEY2=VALUE2 --env staging
+
+# List all environment variables for a project
+a8s env list <project-name> --env production
+
+# Remove an environment variable
+a8s env unset <project-name> KEY --env production
+```
+
+---
+
+## Secrets
+
+```bash
+# Add a secret (stored securely in Vault)
+a8s secret set <project-name> SECRET_KEY=SECRET_VALUE
+
+# List secret keys — values are never returned in plaintext
+a8s secret list <project-name>
+
+# Remove a secret
+a8s secret unset <project-name> SECRET_KEY
+```
+
+<Callout type="warning">
+  Secret values are **never** returned by the CLI. Only secret key names are listed. This is by design — values are stored in Vault and injected at runtime only.
+</Callout>
+
+---
+
+## Scaling
+
+```bash
+# Manually scale a service to a specific replica count
+a8s scale <project-name> --replicas 3
+
+# Scale a specific service in a microservice project
+a8s scale <project-name> --service <service-name> --replicas 2
+```
+
+---
+
+## Domains
+
+```bash
+# Add a custom domain to a project
+a8s domain add <project-name> example.com
+
+# List all domains for a project
+a8s domain list <project-name>
+
+# Remove a custom domain
+a8s domain remove <project-name> example.com
+```
+
+---
+
+## Global Flags
+
+| Flag | Description |
+|---|---|
+| `--env` | Target environment (`dev`, `staging`, `production`) |
+| `--project` | Specify project name explicitly |
+| `--output json` | Return output as JSON (useful for scripting) |
+| `--help` | Show help for any command |
+| `--version` | Show CLI version |
+
+---
+
+## Example Workflow
+
+A typical end-to-end workflow from your terminal:
+
+```bash
+# 1. Log in
+a8s login
+
+# 2. Create a new project connected to your repo
+a8s project create my-api
+
+# 3. Set environment variables
+a8s env set my-api PORT=3000 NODE_ENV=production --env production
+
+# 4. Add secrets
+a8s secret set my-api DATABASE_URL=postgres://...
+
+# 5. Deploy to production
+a8s deploy . --env production
+
+# 6. Watch live logs
+a8s logs my-api
+
+# 7. If something goes wrong — roll back
+a8s rollback my-api --version 2
+```

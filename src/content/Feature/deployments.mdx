@@ -1,0 +1,165 @@
+---
+title: Deployments
+description: Deploy monoliths, microservices, and databases — with full support for Helm, GitOps, rollbacks, and automated pipelines.
+---
+
+import { Tabs, Callout, Steps } from 'nextra/components'
+
+# Deployments
+
+Autonomous supports multiple deployment modes depending on your project type and requirements.
+
+---
+
+## Monolithic Deployment
+
+A monolithic application runs as a **single deployable unit** — one codebase, one Docker image, one Kubernetes Deployment.
+
+<Steps>
+
+### Select Project Type
+
+Choose **Monolith** when creating or configuring your project.
+
+### Configure Build Settings
+
+Set the Dockerfile path and any build arguments.
+
+### Click Deploy
+
+Select the target environment and click **Deploy**.
+
+### Image Built & Pushed
+
+A single Docker image is built and pushed to Harbor.
+
+### Kubernetes Resources Created
+
+One Deployment is created with the desired replica count. A Kubernetes Service is created for networking, ConfigMap is applied, and Vault secrets are injected into all pods at startup.
+
+</Steps>
+
+---
+
+## Microservice Deployment
+
+Each microservice is **built, deployed, and scaled independently**. Every service gets its own Docker image, Kubernetes Deployment, and Service.
+
+<Steps>
+
+### Select Project Type
+
+Choose **Microservice** when creating or configuring your project.
+
+### Define Services
+
+For each service, define: name, repo path or subfolder, and port.
+
+### Click Deploy
+
+Each service is processed independently in parallel.
+
+### Per-Service Images
+
+A separate Docker image is built and pushed to Harbor per service, tagged with its own version.
+
+### Per-Service Kubernetes Resources
+
+Each service gets its own Deployment, Service, ConfigMap, and Vault secrets. Services communicate internally via **Kubernetes DNS**.
+
+</Steps>
+
+<Callout type="info">
+  Each service can be redeployed, scaled, or rolled back **independently** — without affecting other services in the project.
+</Callout>
+
+---
+
+## Database Deployments
+
+<Tabs items={['Single Instance', 'Cluster (HA)']}>
+  <Tabs.Tab>
+    ### Single Database
+
+    Deploy a standalone database as a Kubernetes **StatefulSet**. Suitable for dev and staging environments.
+
+    **Supported:** PostgreSQL · MySQL · MongoDB
+
+    1. Select database type and configure name, version, storage size, and credentials
+    2. Credentials stored in HashiCorp Vault
+    3. Kubernetes StatefulSet created with 1 replica
+    4. PersistentVolumeClaim (PVC) provisioned for data storage
+    5. Kubernetes Service created for internal cluster access
+    6. Credentials injected into app pods via Vault at deploy time
+    7. Data persists across pod restarts via the PVC
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ### Cluster Database (High Availability)
+
+    Deploy a multi-replica database cluster for **production** workloads with automatic failover.
+
+    1. Select database type and enable **cluster mode**
+    2. Configure replica count (e.g., 1 primary + 2 replicas), storage size, and credentials
+    3. Credentials stored in HashiCorp Vault
+    4. StatefulSet with multiple replicas deployed
+    5. Each replica gets its own PersistentVolumeClaim
+    6. Primary node handles writes; replicas handle reads
+    7. Kubernetes headless Service enables stable DNS per pod
+    8. If primary fails → replica is promoted automatically
+    9. App connects via cluster endpoint injected from Vault
+  </Tabs.Tab>
+</Tabs>
+
+---
+
+## GitOps Deployment (ArgoCD + Helm)
+
+For teams practicing GitOps, Autonomous can watch a dedicated `config/` or `manifests/` branch. Any merge to that branch automatically triggers ArgoCD to sync the cluster state.
+
+```
+Git push → ArgoCD detects change → Syncs to Kubernetes cluster
+```
+
+**Benefits:**
+- Full audit trail of every infrastructure change via Git history
+- Pull-request-based infrastructure reviews
+- Automatic rollback by reverting a Git commit
+- If live cluster drifts from Git state → ArgoCD auto-corrects
+
+---
+
+## Redeploy
+
+Re-trigger the current deployment without new code. Uses the last successful image from Harbor with the current environment config.
+
+**Useful for:** pod restarts, config updates, environment variable changes.
+
+---
+
+## Rollback
+
+Pick any previous version from your **Version History** and immediately redeploy it — no rebuild required.
+
+1. Open **Version History** in the dashboard
+2. Select a previous stable version
+3. Click **Rollback**
+4. Platform pulls that version's image from Harbor
+5. Re-applies that version's original environment config
+6. Kubernetes rolls out the previous version
+7. Rollback event logged in deployment history
+
+<Callout type="warning">
+  Rollback is instant — it does not trigger a new build. The exact image from that version is reused from Harbor.
+</Callout>
+
+---
+
+## Deployment History
+
+Every deployment is recorded with:
+
+- Timestamp and commit reference
+- Image tag and version number
+- Target environment
+- Deployment status
+- Who triggered the deployment

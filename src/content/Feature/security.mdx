@@ -1,0 +1,69 @@
+---
+title: Security
+description: OAuth authentication, Vault-backed secrets, image scanning, RBAC, and network isolation built into every layer.
+---
+
+import { Callout } from 'nextra/components'
+
+# Security
+
+Security is built into every layer of the platform — from authentication to runtime secret injection to network isolation.
+
+---
+
+## Authentication
+
+All platform access is authenticated through **Keycloak** using OAuth via GitHub or GitLab. The platform does not store passwords. Sessions are managed via **JWT tokens** issued by Keycloak and expire according to your organization's session policy.
+
+Supported identity providers:
+- GitHub OAuth
+- GitLab OAuth
+- LDAP / Active Directory (via Keycloak)
+- Google Workspace (via Keycloak)
+- Any OIDC-compatible provider
+
+---
+
+## Secrets Management
+
+Secrets are stored in **HashiCorp Vault** using the KV secrets engine, scoped to each individual project.
+
+<Callout type="error">
+  Secrets are **never** stored in the Autonomous platform database, **never** written to Kubernetes ConfigMaps in plaintext, and **never** appear in application logs.
+</Callout>
+
+- Injected directly into pod environments at runtime via the Vault agent
+- Every read and write to a secret is fully audited
+- Secrets can be rotated without redeploying your application
+
+---
+
+## Container Image Scanning
+
+All images pushed to **Harbor** are automatically scanned for known CVE vulnerabilities. The vulnerability summary for each image version is visible in the UI.
+
+Administrators can configure policies to:
+- **Warn** on images with critical vulnerabilities
+- **Block** deployments of images that fail the vulnerability threshold
+
+---
+
+## Role-Based Access Control
+
+Access to all platform resources is governed by roles managed in Keycloak and enforced at both API and UI levels.
+
+| Role | Access Level |
+|---|---|
+| **Admin** | Full platform — users, cluster config, quotas, alerts |
+| **Developer** | Own projects, deployments, secrets, environments |
+| **Viewer** | Read-only — dashboards, logs, deployment history |
+
+Users can only access their own projects and resources. There is **no cross-user visibility** by default.
+
+---
+
+## Network Isolation
+
+Each project's workloads run in **isolated Kubernetes namespaces**. Services from different projects cannot communicate unless explicitly configured.
+
+All external access is routed through the **Kubernetes Ingress controller** with TLS enforced. HTTP requests are automatically redirected to HTTPS via cert-manager.

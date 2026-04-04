@@ -1,0 +1,86 @@
+---
+title: Storage & Billing
+description: Understand your 2 GiB storage quota, monitor usage per project, and manage upgrades when you need more space.
+---
+
+import { Callout } from 'nextra/components'
+
+# Storage & Billing
+
+---
+
+## Storage Quota
+
+Every Autonomous account includes **2 GiB of platform storage** shared across all projects.
+
+Storage is consumed by:
+
+| Source | Description |
+|---|---|
+| **Databases** | Data stored in deployed PostgreSQL, MySQL, or MongoDB instances |
+| **PersistentVolumeClaims** | Storage attached to application deployments |
+| **Database Backups** | Compressed backup snapshots stored on platform storage |
+
+Storage usage is visible in real time from the **Storage** section of your dashboard, with a per-project breakdown.
+
+---
+
+## Monitoring Usage
+
+1. Open your **Dashboard**
+2. Navigate to the **Storage** section
+3. View total usage and a breakdown per project — databases, PVCs, and backup files listed separately
+
+---
+
+## Warnings & Limits
+
+<Callout type="warning">
+  At **90% usage**, a warning notification is sent to your configured alert channel and displayed in the dashboard.
+</Callout>
+
+<Callout type="error">
+  At **100% usage**, the following actions are **paused** until space is freed or storage is upgraded:
+  - New deployments
+  - Database provisioning
+  - Backup creation
+
+  A clear error message is shown explaining the reason for any blocked action.
+</Callout>
+
+---
+
+## Freeing Up Storage
+
+To reclaim space without upgrading:
+
+- **Delete old backups** — remove database snapshots from the Backups section
+- **Remove unused deployments** — stop and delete services that are no longer needed
+- **Delete unused databases** — remove databases and their associated PVCs from the Database tab
+
+---
+
+## Upgrading Storage
+
+To increase your storage limit:
+
+1. Navigate to **Plan & Billing** in your account settings
+2. Select the additional storage tier you need
+3. Complete the purchase
+
+Storage upgrades take effect **immediately** and unblock any paused operations.
+
+---
+
+## Admin Storage Management
+
+Platform administrators can manage storage across all users from the **Admin Panel**:
+
+- View storage usage per user
+- Adjust individual storage quotas
+- Review per-project usage breakdowns
+- Remove unused resources on behalf of users
+
+<Callout type="info">
+  Admins can increase a user's quota without requiring the user to purchase an upgrade — useful for organization-managed deployments.
+</Callout>

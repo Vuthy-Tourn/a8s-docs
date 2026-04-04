@@ -1,0 +1,272 @@
+/* ─── 1. Tailwind base (must be first) ───────────────────────────────────── */
+@import "tailwindcss";
+
+/* ─── 2. Nextra theme styles (required – NOT auto-imported in Nextra 4) ──── */
+@import "nextra-theme-docs/style.css";
+
+/* ─── 3. Dark-mode variant for Tailwind 4 + Nextra .dark class ───────────── */
+@variant dark (&:where(.dark, .dark *));
+
+/* ─── 4. Custom design tokens (brand orange palette) ─────────────────────── */
+@theme {
+  --color-brand-50:  #fff7ed;
+  --color-brand-100: #ffedd5;
+  --color-brand-200: #fed7aa;
+  --color-brand-300: #fdba74;
+  --color-brand-400: #fb923c;
+  --color-brand-500: #f97316;
+  --color-brand-600: #f56021;
+  --color-brand-700: #c2410c;
+  --color-brand-800: #9a3412;
+  --color-brand-900: #7c2d12;
+
+  --font-sans: 'Poppins', -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+/* ─── CSS Variables ───────────────────────────────────────────────────────── */
+:root {
+  --primary:        #F56021;
+  --primary-light:  rgba(245, 96, 33, 0.12);
+  --primary-border: rgba(245, 96, 33, 0.25);
+  --primary-hover:  #e04a10;
+
+  --font-body: 'Poppins', -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Light surface tokens */
+  --surface-code-bg: #f6f7f9;
+  --surface-code-border: #e4e7ec;
+  --inline-code-bg: rgba(99, 102, 241, 0.07);
+  --inline-code-border: rgba(99, 102, 241, 0.15);
+  --inline-code-color: #5b4cda;
+}
+
+.dark {
+  --surface-code-bg: #0d1117;
+  --surface-code-border: #21262d;
+  --inline-code-bg: rgba(110, 118, 129, 0.1);
+  --inline-code-border: rgba(110, 118, 129, 0.22);
+  --inline-code-color: #f08080;
+}
+
+
+html {
+  font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body) !important;
+  font-size: 15px !important;
+  line-height: 1.7 !important;
+  font-weight: 400 !important;
+}
+
+/* ─── Code ────────────────────────────────────────────────────────────────── */
+code, pre, kbd, samp {
+  font-family: var(--font-mono) !important;
+}
+
+pre {
+  background: var(--surface-code-bg) !important;
+  border: 1px solid var(--surface-code-border) !important;
+  border-radius: 10px !important;
+  padding: 1.25rem 1.5rem !important;
+}
+
+pre code {
+  font-size: 0.9em !important;
+  line-height: 1.75 !important;
+  font-weight: 400 !important;
+}
+
+code:not(pre code) {
+  background: var(--inline-code-bg) !important;
+  border: 1px solid var(--inline-code-border) !important;
+  color: var(--inline-code-color) !important;
+  font-size: 0.84em !important;
+  padding: 0.15em 0.45em !important;
+  border-radius: 5px !important;
+  font-weight: 500 !important;
+}
+
+/* ─── Headings ────────────────────────────────────────────────────────────── */
+article h1 {
+  font-family: var(--font-body) !important;
+  font-weight: 700 !important;
+  font-size: 2rem !important;
+  letter-spacing: -0.035em !important;
+  line-height: 1.25 !important;
+  margin-bottom: 0.75rem !important;
+}
+
+article h2 {
+  font-family: var(--font-body) !important;
+  font-weight: 600 !important;
+  font-size: 1.375rem !important;
+  letter-spacing: -0.02em !important;
+  line-height: 1.35 !important;
+  margin-top: 2.5rem !important;
+  padding-top: 1.5rem !important;
+}
+
+article h3 {
+  font-family: var(--font-body) !important;
+  font-weight: 600 !important;
+  font-size: 1.1rem !important;
+  letter-spacing: -0.01em !important;
+}
+
+article h4, article h5, article h6 {
+  font-family: var(--font-body) !important;
+  font-weight: 600 !important;
+}
+
+/* ─── Prose ───────────────────────────────────────────────────────────────── */
+article p {
+  font-family: var(--font-body) !important;
+  font-size: 0.9625rem !important;
+  line-height: 1.8 !important;
+  font-weight: 400 !important;
+}
+
+article ul, article ol {
+  font-family: var(--font-body) !important;
+  font-size: 0.9625rem !important;
+  line-height: 1.8 !important;
+}
+
+article a:not(.nextra-card) {
+  font-weight: 500 !important;
+  text-underline-offset: 3px !important;
+}
+
+/* ─── Tables ──────────────────────────────────────────────────────────────── */
+article table {
+  font-family: var(--font-body) !important;
+  font-size: 0.9rem !important;
+  width: 100% !important;
+  border-collapse: collapse !important;
+}
+
+article th {
+  font-weight: 600 !important;
+  font-size: 0.8rem !important;
+  letter-spacing: 0.03em !important;
+  text-transform: uppercase !important;
+  padding: 0.6rem 1rem !important;
+  border-bottom: 2px solid rgba(125, 125, 125, 0.2) !important;
+}
+
+article td {
+  padding: 0.6rem 1rem !important;
+  border-bottom: 1px solid rgba(125, 125, 125, 0.1) !important;
+  vertical-align: top !important;
+}
+
+/* ─── Blockquotes ─────────────────────────────────────────────────────────── */
+article blockquote {
+  font-style: italic !important;
+  border-left: 3px solid #f97316 !important;
+  padding-left: 1rem !important;
+  margin-left: 0 !important;
+  opacity: 0.8 !important;
+}
+
+[class*="text-primary"] {
+    color: var(--primary) !important;
+    font-weight: 500 !important;
+  }
+
+/* ─── Callout / Steps ─────────────────────────────────────────────────────── */
+.nextra-steps h3 {
+  font-family: var(--font-body) !important;
+  font-weight: 600 !important;
+}
+
+.nextra-callout {
+  border-radius: 10px !important;
+  padding: 1rem 1.25rem !important;
+}
+
+/* ─── Cards ───────────────────────────────────────────────────────────────── */
+.nextra-cards .nextra-card {
+  border-radius: 12px !important;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease !important;
+}
+
+.nextra-cards .nextra-card:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12) !important;
+}
+
+/* ─── Dark-mode overrides ─────────────────────────────────────────────────── */
+.dark pre {
+  background: var(--surface-code-bg) !important;
+  border-color: var(--surface-code-border) !important;
+}
+
+.dark article h2 {
+  border-top-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* ─── Sidebar ────────────────────────────────────────────────────────────── */
+.nextra-sidebar-container li a,
+.nextra-sidebar-container button {
+  font-family: var(--font-body) !important;
+  font-size: 13.5px !important;
+  font-weight: 400 !important;
+  letter-spacing: 0 !important;
+}
+
+/* Category / separator labels */
+.nextra-sidebar-container .nx-text-xs {
+  font-family: var(--font-body) !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+  opacity: 0.45 !important;
+}
+
+/* Active item */
+.nextra-sidebar-container li a[aria-current='page'] {
+  font-weight: 600 !important;
+}
+
+/* ─── TOC ────────────────────────────────────────────────────────────────── */
+.nextra-toc li a {
+  font-family: var(--font-body) !important;
+  font-size: 12.5px !important;
+  line-height: 1.6 !important;
+}
+
+/* ─── Search ─────────────────────────────────────────────────────────────── */
+.nextra-search input:focus {
+  outline: none !important;
+  box-shadow: 0 0 0 2px var(--primary) !important;
+  border-color: var(--primary) !important;
+}
+
+/* Search result highlight */
+.nextra-search mark,
+.nextra-search [data-selected] {
+  background-color: var(--primary-light) !important;
+  color: var(--primary) !important;
+}
+/* Focus ring — global brand colour */
+*:focus-visible {
+  outline-color: var(--primary) !important;
+}
+.nextra-sidebar-container li a,
+.nextra-sidebar-container button {
+  font-family: var(--font-body) !important;
+  font-size: 13.5px !important;
+  font-weight: 400 !important;
+  letter-spacing: 0 !important;
+  transition: color 0.15s ease, background-color 0.15s ease !important;
+}

@@ -1,0 +1,82 @@
+---
+title: Monitoring & Observability
+description: Real-time metrics, live log streaming, and configurable alerts — full visibility into every running application.
+---
+
+import { Callout } from 'nextra/components'
+
+# Monitoring & Observability
+
+Autonomous provides full observability for every deployed application out of the box — no configuration required.
+
+---
+
+## Real-Time Metrics
+
+**Prometheus** scrapes metrics from your pods on a continuous interval. **Grafana** renders live charts in your dashboard. All data is scoped to your own namespaces — you only ever see metrics from your own applications.
+
+**Metrics available per service:**
+
+| Metric | Description |
+|---|---|
+| **CPU Usage** | Per pod and aggregate, with configurable time ranges |
+| **Memory Usage** | Current consumption vs. defined limits |
+| **Request Rate** | HTTP requests per second |
+| **Error Rate** | 4xx and 5xx response percentages |
+| **Response Latency** | P50, P95, P99 latency per service |
+| **Pod Restarts** | Indicator of application instability |
+| **Replica Count** | Current running replicas vs. desired |
+
+<Callout type="info">
+  Metrics are scoped to the logged-in user's Kubernetes namespaces only. There is no cross-user visibility.
+</Callout>
+
+---
+
+## Log Viewer
+
+All pod logs are collected by **Promtail** and shipped to **Loki** in real time. From the **Logs** tab in your project dashboard:
+
+- **Live-tail** logs from all running pods
+- **Search** by keyword, severity level, or time range
+- **Filter** logs per specific pod or service
+- **Multi-pod view** — see logs across replicas simultaneously
+
+Logs are delivered via **WebSocket** for real-time streaming. No `kubectl` access, no SSH, no terminal required.
+
+```
+Pods → Promtail (collector) → Loki (storage) → Dashboard (UI)
+```
+
+**Log retention:** Determined by your organization's Loki retention policy (default: 30 days).
+
+---
+
+## Alerts
+
+Define alert rules per service directly from your dashboard. **Alertmanager** evaluates all rules continuously against live Prometheus metrics.
+
+### Alert Flow
+
+1. An alert rule is defined — e.g., `CPU > 80% for 5 minutes`
+2. Alertmanager evaluates the rule on each metrics scrape
+3. When a threshold is breached, the alert **fires**
+4. The alert is routed to your configured notification channel
+5. The alert also appears as a notification in your dashboard
+6. The alert **auto-resolves** when the metric returns below the threshold
+
+### Supported Notification Channels
+
+| Channel | Setup |
+|---|---|
+| **Email** | Configured by admin in platform settings |
+| **Slack** | Webhook URL configured per project |
+| **Custom Webhook** | Any HTTP endpoint |
+
+### Available Alert Triggers
+
+- Pod crash or restart loop detected
+- CPU usage exceeds threshold for a sustained period
+- Memory usage approaching limit
+- Deployment failure or health check timeout
+- New deployment completed successfully

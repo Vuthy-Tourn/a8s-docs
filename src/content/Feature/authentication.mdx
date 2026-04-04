@@ -1,0 +1,75 @@
+---
+title: Authentication & Account Management
+description: Log in with GitHub or GitLab, manage your profile, and understand how roles and permissions work.
+---
+
+import { Steps, Callout } from 'nextra/components'
+
+# Authentication & Account Management
+
+---
+
+## Register & Log In
+
+Autonomous uses **OAuth-based authentication** via GitHub or GitLab. There is no username/password registration — your existing developer identity is your account.
+
+<Callout type="warning">
+  Duplicate accounts are blocked — the same OAuth identity always maps to one account only.
+</Callout>
+
+<Steps>
+
+### Click Login
+
+Choose **GitHub** or **GitLab** from the login screen.
+
+### OAuth Redirect
+
+You are redirected to the OAuth provider to authorize access.
+
+### Identity Returned
+
+The provider returns your identity — email, username, and avatar.
+
+### Account Check
+
+The platform checks for an existing account and creates one if this is your first login.
+
+### JWT Issued
+
+Keycloak issues a JWT token containing your role and permissions.
+
+### Redirected to Dashboard
+
+You land on your personal **Developer Dashboard**.
+
+</Steps>
+
+All subsequent API calls are authorized using the JWT token issued by Keycloak.
+
+---
+
+## Profile Management
+
+Update your display name, avatar, and account details at any time from the **Profile Settings** page. Changes are saved to the platform database and synced to Keycloak.
+
+1. Open **Profile Settings**
+2. Edit your name, avatar, or account details
+3. Submit the form (input is validated before saving)
+4. Changes are saved to the database and synced to Keycloak
+
+---
+
+## Role-Based Access Control
+
+All user access is governed by roles managed through Keycloak and enforced at both the API and UI levels.
+
+| Role | Permissions |
+|---|---|
+| **Admin** | Full platform access — user management, cluster config, storage quotas, alert rules |
+| **Developer** | Create and manage their own projects, deployments, secrets, and environments |
+| **Viewer** | Read-only access to dashboards, logs, and deployment history |
+
+<Callout type="info">
+  Roles are synchronized with the Autonomous backend automatically. Users can only access their own resources — there is no cross-user visibility by default.
+</Callout>

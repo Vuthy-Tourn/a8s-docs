@@ -1,0 +1,92 @@
+---
+title: Getting Started
+description: Get your first application live in under 5 minutes — from connecting your repo to a running deployment.
+---
+
+import { Steps, Callout } from 'nextra/components'
+
+# Getting Started
+
+Get your first application deployed in under 5 minutes.
+
+<Callout type="info">
+  **New to Autonomous?** Make sure you have a GitHub or GitLab account ready — that's all you need to sign up.
+</Callout>
+
+---
+
+## Prerequisites
+
+Before you begin, make sure you have:
+
+- A Git repository (GitHub or GitLab) containing your application source code
+- A `Dockerfile` or a buildable project (Autonomous can auto-detect common frameworks)
+- An Autonomous account — log in via GitHub or GitLab OAuth at your organization's instance
+
+---
+
+## Quickstart
+
+<Steps>
+
+### Log In to Your Dashboard
+
+Navigate to your Autonomous instance URL and log in using your GitHub or GitLab account. Authentication is powered by **Keycloak**, so your organization's SSO or identity provider may be used automatically.
+
+Once logged in, you'll land on your **Developer Dashboard** — your central hub for all deployments, services, and monitoring.
+
+### Connect Your Git Repository
+
+1. From the dashboard, click **"New Project"**
+2. Select **"Connect Repository"**
+3. Authorize Autonomous to access your GitHub or GitLab account
+4. Choose the repository and branch you want to deploy
+
+Autonomous will automatically scan your repository for a `Dockerfile`, a `helm/` directory, or a supported framework configuration.
+
+### Configure Your Application
+
+Fill in the basic deployment configuration:
+
+| Field | Description |
+|---|---|
+| **Project Name** | A unique identifier for your service |
+| **Environment** | Select `dev`, `staging`, or `production` |
+| **Port** | The port your application listens on |
+| **Environment Variables** | Config values stored securely in Vault |
+| **Resources** | CPU and memory limits (or leave on auto) |
+
+If your project includes a `helm/` chart or a `kustomize/` overlay, Autonomous will detect and use them automatically.
+
+### Deploy
+
+Click **"Deploy"**. Autonomous will:
+
+1. Trigger a Jenkins CI pipeline to build your Docker image
+2. Push the image to your Harbor artifact registry
+3. Deploy the image to your Kubernetes cluster via ArgoCD
+4. Expose your application and return a live URL
+
+The entire process typically takes **2–4 minutes** depending on build complexity.
+
+### Monitor Your Application
+
+Once deployed, your dashboard will show:
+
+- Live deployment status
+- Pod health and replica count
+- CPU and memory usage graphs
+- Real-time application logs
+- Alert notifications if anything goes wrong
+
+You're live. That's it.
+
+</Steps>
+
+---
+
+## What's Next?
+
+- Explore [Core Features](/docs/core-features) to see everything the platform offers
+- Set up [Projects & Environments](/docs/projects-environments) for dev, staging, and production
+- Configure the [CLI](/docs/cli-reference) to deploy from your terminal

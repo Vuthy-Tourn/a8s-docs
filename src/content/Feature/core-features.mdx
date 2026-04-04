@@ -1,0 +1,184 @@
+---
+title: Core Features
+description: Everything the platform does in one place — deployments, monitoring, logs, secrets, scaling, testing, and more.
+---
+
+import { Callout, Tabs } from 'nextra/components'
+
+# Core Features
+
+A complete overview of everything Autonomous offers — from one-click deployments to integrated testing and secret management.
+
+---
+
+## One-Click Deployment
+
+Deploy any application instantly with a single click. Autonomous handles everything — building the Docker image, pushing it to the registry, and deploying it to Kubernetes. You only choose the target environment.
+
+Supported project types:
+
+| Type | Description |
+|---|---|
+| **Monolithic** | Single codebase deployed as one Kubernetes Deployment |
+| **Microservice** | Each service built, pushed, and deployed independently |
+| **Single Database** | Standalone StatefulSet with persistent storage |
+| **Cluster Database** | High-availability multi-replica setup with automatic failover |
+
+---
+
+## Git Integration & Auto Deploy
+
+Connect your GitHub or GitLab repository once. Every push to the configured branch automatically triggers the full build and deploy pipeline — no manual action required after initial setup.
+
+Autonomous registers a webhook on your repository. When a push event is received, the platform pulls the latest code, builds a Docker image, pushes it to Harbor, and deploys to Kubernetes automatically.
+
+---
+
+## Automated CI/CD Pipeline
+
+Every deployment trigger runs through a fully automated pipeline:
+
+1. Source code is pulled from the connected repository
+2. Application is compiled and tested
+3. Docker image is built and tagged with a version number
+4. Image is pushed to the Harbor private registry
+5. Kubernetes Deployment or StatefulSet is created or updated
+6. Service, ConfigMap, and Vault secrets are applied
+7. Build and deployment logs stream to the UI in real time
+
+---
+
+## Helm + GitOps with ArgoCD <StatusBadge variant="stable" />
+
+Store your Helm charts in a Git repository and let ArgoCD manage the cluster state automatically. ArgoCD watches the repository for changes and syncs the cluster whenever a new chart or values file is pushed.
+
+<Callout type="info">
+  If the live cluster drifts from the desired Git state for any reason, ArgoCD corrects it automatically. Sync status is always visible in your dashboard.
+</Callout>
+
+---
+
+## Redeploy & Rollback
+
+**Redeploy** re-triggers the current deployment using the last successful image from Harbor with the current environment config. Useful for pod restarts or applying config changes without a new code push.
+
+**Rollback** lets you pick any previous version from your deployment history and immediately redeploy it — no rebuild required. The previous image is pulled from Harbor, the original environment config is re-applied, and the rollback event is logged.
+
+---
+
+## Auto-Scaling
+
+Kubernetes Horizontal Pod Autoscalers (HPA) are configured automatically for every deployment. Prometheus monitors resource usage continuously.
+
+- When CPU or memory **exceeds** the configured threshold → HPA adds pod replicas
+- When load **drops** below the threshold → replicas are removed
+- Scale events are visible in your dashboard metrics
+
+---
+
+## Real-Time Monitoring
+
+Prometheus scrapes metrics from every pod on a continuous interval. Grafana renders live charts in your dashboard, scoped exclusively to your own namespaces.
+
+**Metrics available per service:**
+- CPU and memory usage (per pod and aggregate)
+- Request rate (HTTP requests per second)
+- Error rate (4xx and 5xx response percentages)
+- Response latency
+- Pod restart count and replica count
+
+---
+
+## Alerts & Notifications
+
+Define alert rules per service. When a threshold is breached, Alertmanager fires and routes to your configured channel.
+
+**Supported channels:** Email · Slack · Custom webhook
+
+Alerts also appear as in-dashboard notifications and auto-resolve when the metric returns to normal.
+
+---
+
+## Centralized Log Viewer
+
+All pod logs are collected by Promtail and shipped to Loki in real time.
+
+- Live-tail logs from running pods
+- Search and filter by keyword, time range, or service
+- View logs across multiple replicas simultaneously
+- Delivered via WebSocket — no `kubectl` or SSH required
+
+---
+
+## Artifact Registry (Harbor)
+
+Every successful build pushes a versioned Docker image to your Harbor private registry. All versions are retained indefinitely for rollback.
+
+<Callout type="default">
+  **External registry support:** Users can connect their own registry (Docker Hub, ECR, GCR) by providing credentials. Autonomous will push and pull images from the external registry instead.
+</Callout>
+
+---
+
+## Secret Management with Vault
+
+Secrets are stored exclusively in HashiCorp Vault — never in the platform database, never in Git, never in logs. At deploy time, Vault injects secrets into pods as environment variables or mounted files.
+
+---
+
+## Multi-Environment Support
+
+Each project supports three isolated environments — **dev**, **staging**, and **production** — each with its own environment variables, config files, and Kubernetes ConfigMaps. Promote deployments between environments with a single click.
+
+---
+
+## Custom Domain & TLS
+
+Map any custom domain to a deployed project. Autonomous automatically provisions a TLS certificate via cert-manager (Let's Encrypt) and configures the Kubernetes Ingress. HTTP is automatically redirected to HTTPS.
+
+---
+
+## Testing Suite <StatusBadge variant="stable" />
+
+Run integrated tests against your application directly from the **Testing** tab:
+
+| Test Type | Description |
+|---|---|
+| **Load Testing** | Simulate expected concurrent users and traffic |
+| **Stress Testing** | Push beyond capacity to find breaking points |
+| **Smoke Testing** | Quick sanity checks after each deployment |
+| **Performance Testing** | Measure response times, throughput, and resource usage |
+| **Failover / Resilience** | Simulate pod and node failures |
+| **Security Testing** | Scan for vulnerabilities, exposed secrets, and misconfigurations |
+
+---
+
+## Code Quality Scan (SonarQube) <StatusBadge variant="beta" />
+
+Run a SonarQube analysis on any connected repository at any time — no deployment required. Results show bugs, vulnerabilities, code smells, duplication, and a Quality Gate status (Pass / Fail).
+
+---
+
+## Database Access (Built-in Web Client)
+
+Every deployed database comes with a built-in browser-based UI similar to DBeaver or TablePlus. Connection details are auto-filled from Vault — no manual setup needed. Browse tables, run queries, and view records directly in the browser.
+
+---
+
+## Database Backup & Restore
+
+Databases are backed up automatically on a configurable schedule. Any snapshot can be restored with one click.
+
+**Supported tools:** `pg_dump` · `mysqldump` · `mongodump`
+
+---
+
+## Database Migration
+
+Upload `.sql` migration scripts, trigger the migration, and watch output stream to the UI in real time. Scripts execute in order — if one fails, execution stops immediately to prevent incomplete schema changes.
+
+---
+
+## CLI
+
+Control the full platform from your terminal using the Autonomous CLI (`a8s`). See the [CLI Reference](/docs/cli-reference) for all commands.
