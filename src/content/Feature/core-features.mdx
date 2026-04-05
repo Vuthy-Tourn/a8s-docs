@@ -48,7 +48,7 @@ Every deployment trigger runs through a fully automated pipeline:
 
 ---
 
-## Helm + GitOps with ArgoCD <StatusBadge variant="stable" />
+## Helm + GitOps with ArgoCD 
 
 Store your Helm charts in a Git repository and let ArgoCD manage the cluster state automatically. ArgoCD watches the repository for changes and syncs the cluster whenever a new chart or values file is pushed.
 
@@ -138,7 +138,7 @@ Map any custom domain to a deployed project. Autonomous automatically provisions
 
 ---
 
-## Testing Suite <StatusBadge variant="stable" />
+## Testing Suite 
 
 Run integrated tests against your application directly from the **Testing** tab:
 
@@ -153,7 +153,7 @@ Run integrated tests against your application directly from the **Testing** tab:
 
 ---
 
-## Code Quality Scan (SonarQube) <StatusBadge variant="beta" />
+## Code Quality Scan (SonarQube)
 
 Run a SonarQube analysis on any connected repository at any time — no deployment required. Results show bugs, vulnerabilities, code smells, duplication, and a Quality Gate status (Pass / Fail).
 
@@ -179,6 +179,26 @@ Upload `.sql` migration scripts, trigger the migration, and watch output stream 
 
 ---
 
-## CLI
 
-Control the full platform from your terminal using the Autonomous CLI (`a8s`). See the [CLI Reference](/docs/cli-reference) for all commands.
+## What's Next?
+
+<A8nCards columns={3}>
+  <A8nCard
+    title="Authentication"
+    href="/docs/authentication"
+    description="Jump in with A8n's OAuth authentication."
+    icon="key"
+  />
+  <A8nCard
+    title="Projects & Environments"
+    href="/docs/feature/projects-environments"
+    description="Set up Projects & Environments for dev, staging, and production."
+    icon="env"
+  />
+  <A8nCard
+    title="CLI Reference"
+    href="/docs/reference/cli-reference"
+    description="Full command reference for the A8n CLI tool."
+    icon="terminal"
+  />
+</A8nCards>

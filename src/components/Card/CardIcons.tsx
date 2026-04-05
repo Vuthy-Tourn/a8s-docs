@@ -17,6 +17,7 @@ import {
   Package,
   Database,
   Webhook,
+  ShieldCogCorner,
   type LucideProps,
 } from 'lucide-react'
 
@@ -43,6 +44,7 @@ export const iconMap = {
   package:   Package,
   database:  Database,
   webhook:   Webhook,
+  env: ShieldCogCorner,
 } as const
 
 export type IconName = keyof typeof iconMap

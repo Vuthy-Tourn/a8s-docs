@@ -1,7 +1,7 @@
 const meta = {
   index: "",
-  "get-started": "",
-  Feature: "",
+  "getting-started": "",
+  feature: "",
 
 };
 
