@@ -5,7 +5,6 @@ description: Autonomous (A8s) — your self-service DevOps platform that lets de
 
 import { Cards, Card, Callout } from 'nextra/components'
 
-
 # Welcome to A8n Docs
 
 Welcome to **Autonomous (A8s)** — your self-service DevOps platform that lets developers deploy, monitor, and manage applications on Kubernetes — without ever touching infrastructure.
@@ -46,22 +45,23 @@ Autonomous abstracts all of that into a single, developer-friendly platform. You
 
 ## Where to Start
 
-<Cards>
-  <Cards.Card title="Getting Started" href="/docs/getting-started" arrow>
-  <span className="p-6">
-    Get your first application live in under 5 minutes.
-  </span>
-</Cards.Card>
-
-  <Cards.Card title="Core Features" href="/docs/core-features" arrow>
-    Explore everything the platform offers.
-  </Cards.Card>
-
-  <Cards.Card title="Projects & Environments" href="/docs/projects-environments" arrow>
-    Create projects and configure environments.
-  </Cards.Card>
-
-  <Cards.Card title="Deployments" href="/docs/deployments" arrow>
-    Deploy monoliths, microservices, and databases.
-  </Cards.Card>
-</Cards>
+<A8nCards columns={3}>
+  <A8nCard
+    title="Getting Started"
+    href="/docs/getting-started"
+    description="Get your first application live in under 5 minutes."
+    icon="rocket"
+  />
+  <A8nCard
+    title="Authentication"
+    href="/docs/authentication"
+    description="Jump in with A8n's OAuth authentication."
+    icon="key"
+  />
+  <A8nCard
+    title="CLI Reference"
+    href="/docs/cli-reference"
+    description="Full command reference for the A8n CLI tool."
+    icon="terminal"
+  />
+</A8nCards>
