@@ -33,6 +33,7 @@
   --primary-light:  rgba(245, 96, 33, 0.12);
   --primary-border: rgba(245, 96, 33, 0.25);
   --primary-hover:  #e04a10;
+  --primary-focus: #f5612136;
 
   --font-body: 'Poppins', -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
@@ -272,4 +273,15 @@ article blockquote {
 
 code span{
   font-size: 0.85rem;
+}
+
+/* ─── Aside link focus background color ─────────────────────────────────────────────────────────────── */
+[class*="bg-primary-400"] {
+    background-color: var(--primary-focus) !important;
+}
+li[class*="bg-primary-100"] {
+    background-color: var(--primary-focus) !important;
+}
+.nextra-banner {
+  background: linear-gradient(to right, var(--primary), var(--secondary)) !important;
 }

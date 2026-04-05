@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   description:
     'Self-service DevOps platform — deploy on Kubernetes without infrastructure complexity.',
   openGraph: {
-    siteName: 'A8n Docs',
+    siteName: 'A8n Documentation',
     description:
       'Self-service DevOps platform — deploy on Kubernetes without infrastructure complexity.',
   },

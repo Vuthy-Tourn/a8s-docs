@@ -8,7 +8,7 @@ export function Logo() {
         className="h-7 w-auto"
       />
 
-      <span className="font-bold text-[18px] tracking-[-0.02em] bg-linear-to-r from-(--primary) to-(--secondary) bg-clip-text text-transparent">
+      <span className="font-bold text-[16px] tracking-[-0.02em] bg-linear-to-r from-(--primary) to-(--secondary) bg-clip-text text-transparent">
         Autonomous
       </span>
 
