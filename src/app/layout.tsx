@@ -42,11 +42,11 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
           navbar={
             <Navbar
               logo={<Logo />}
-              projectLink="https://github.com/ITProfessional-Gen01/a8s-documentation"
+              projectLink="https://github.com/Vuthy-Tourn/a8s-docs.git"
             />
           }
           pageMap={pageMap}
-          docsRepositoryBase="https://github.com/autonomous/a8n/tree/main/docs"
+          docsRepositoryBase="https://github.com/Vuthy-Tourn/a8s-docs/tree/main/docs"
           editLink="Edit this page on GitHub →"
           sidebar={{ defaultMenuCollapseLevel: 1, toggleButton: true }}
           toc={{ title: 'On This Page', backToTop: true }}
