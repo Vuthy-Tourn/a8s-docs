@@ -1,0 +1,35 @@
+---
+title: Microservices Deployment Guides
+description: Guides for deploying multi-service applications on Autonomous.
+sidebarTitle: Microservices
+asIndexPage: true
+---
+
+import { Callout } from 'nextra/components'
+
+# Microservices Deployment Guides
+
+Use this section when your platform users need to deploy multiple services independently, each with its own image, workload, and release lifecycle.
+
+<Callout type="info">
+  Microservices deployment is the right fit when services need separate scaling, independent rollbacks, or different repository paths inside the same project.
+</Callout>
+
+---
+
+## Available Guides
+
+<A8nCards columns={2}>
+  <A8nCard
+    title="Spring Boot Microservice with Maven"
+    href="/docs/guides/microservices/deploy-spring-boot-maven-service"
+    description="Deploy one Spring Boot service inside a microservice project when the service builds with Maven."
+    icon="branch"
+  />
+  <A8nCard
+    title="Spring Boot Microservice with Gradle"
+    href="/docs/guides/microservices/deploy-spring-boot-gradle-service"
+    description="Deploy one Spring Boot service independently when the project builds with Gradle."
+    icon="branch"
+  />
+</A8nCards>

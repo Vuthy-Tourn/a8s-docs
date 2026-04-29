@@ -1,0 +1,93 @@
+---
+title: Single PostgreSQL Database
+description: Guide users through provisioning a standalone PostgreSQL database on Autonomous.
+---
+
+import { Callout, Steps } from "nextra/components";
+
+# Single PostgreSQL Database
+
+Use this guide when your users need one PostgreSQL instance with persistent storage and straightforward internal connectivity.
+
+<Callout type="info">
+  Recommended deployment mode: **Single Database**. This is a strong fit for
+  development, staging, internal tools, and smaller workloads.
+</Callout>
+
+---
+
+## What Users Should Prepare
+
+- A database name
+- A username and strong password
+- A storage size estimate
+- The target environment: `dev`, `staging`, or `production`
+
+---
+
+## Provisioning Flow
+
+<Steps>
+
+### Create a New Database
+
+From the dashboard, choose the database deployment flow instead of connecting an application repository.
+
+### Select PostgreSQL
+
+Choose **PostgreSQL** as the engine, then define the version, database name, user, storage size, and environment.
+
+### Choose Single Instance
+
+Select the standalone or single-instance topology so Autonomous provisions one StatefulSet replica with attached persistent storage.
+
+### Store Credentials Securely
+
+Autonomous stores the credentials in Vault and injects them into workloads that need access during deployment.
+
+### Provision the Database
+
+The platform creates the StatefulSet, persistent volume claim, and internal Kubernetes Service for the database.
+
+### Validate Connectivity
+
+Once ready, copy the internal connection details, test connectivity from an application, and confirm persistent storage is attached.
+
+</Steps>
+
+---
+
+## Recommended Runtime Settings
+
+| Setting             | Suggested value                                      |
+| ------------------- | ---------------------------------------------------- |
+| **Database Engine** | PostgreSQL                                           |
+| **Topology**        | Single Instance                                      |
+| **Environment**     | `dev` first, then `staging` or `production`          |
+| **Storage**         | Size for expected growth, not just initial seed data |
+| **Credentials**     | Store and rotate through Vault                       |
+
+---
+
+## Common User Mistakes
+
+- Using weak credentials for shared environments
+- Underestimating storage needs
+- Exposing the database externally when only internal service access is required
+- Forgetting to update application secrets after rotating credentials
+
+<Callout type="warning">
+  A single database instance is operationally simple, but it does not provide
+  automatic failover. Use a cluster guide for higher resilience.
+</Callout>
+
+---
+
+## After Deployment
+
+Users can continue by:
+
+- Connecting an app with Vault-managed credentials
+- Monitoring storage growth and pod health
+- Restoring from backups when needed
+- Pairing the database with a monolithic app or microservice project

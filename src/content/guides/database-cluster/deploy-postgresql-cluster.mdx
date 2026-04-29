@@ -1,0 +1,95 @@
+---
+title: PostgreSQL Cluster
+description: Guide users through provisioning a high-availability PostgreSQL cluster on Autonomous.
+---
+
+import { Callout, Steps } from "nextra/components";
+
+# PostgreSQL Cluster
+
+Use this guide when your users need PostgreSQL with replica topology, stronger resilience, and production-oriented failover behavior.
+
+<Callout type="info">
+  Recommended deployment mode: **Database Cluster**. This is the better fit for
+  production workloads that cannot rely on a single database pod.
+</Callout>
+
+---
+
+## What Users Should Prepare
+
+- A database name
+- A username and strong password
+- A storage size estimate per node
+- The target production environment
+- A replica plan such as `1 primary + 2 replicas`
+
+---
+
+## Provisioning Flow
+
+<Steps>
+
+### Start a Database Deployment
+
+From the Autonomous dashboard, open the database provisioning flow and select PostgreSQL as the engine.
+
+### Enable Cluster Mode
+
+Choose the clustered or high-availability option so the platform provisions multiple replicas instead of one standalone instance.
+
+### Configure Topology
+
+Set replica count, storage size, credentials, and any database version requirements before deployment starts.
+
+### Store Credentials in Vault
+
+Autonomous keeps the database credentials in Vault and uses those values when wiring applications to the cluster.
+
+### Provision the Cluster
+
+The platform creates a multi-replica StatefulSet, per-node persistent storage, and the service topology needed for primary and replica traffic.
+
+### Validate Failover-Ready Connectivity
+
+Confirm the cluster endpoint works, replicas appear healthy, and applications connect through the intended internal address.
+
+</Steps>
+
+---
+
+## Recommended Runtime Settings
+
+| Setting             | Suggested value                            |
+| ------------------- | ------------------------------------------ |
+| **Database Engine** | PostgreSQL                                 |
+| **Topology**        | Cluster / High Availability                |
+| **Replica Plan**    | At least `1 primary + 2 replicas`          |
+| **Storage**         | Allocate per node with room for growth     |
+| **Credentials**     | Rotate and store exclusively through Vault |
+
+---
+
+## Common User Mistakes
+
+- Choosing HA mode without planning enough storage per replica
+- Connecting applications directly to a single pod instead of the cluster endpoint
+- Treating replica reads and primary writes as interchangeable without checking app behavior
+- Assuming HA removes the need for backups
+
+<Callout type="warning">
+  High availability improves resilience, but it does not replace backup,
+  restore, and operational testing. Users should validate both failover and
+  recovery paths.
+</Callout>
+
+---
+
+## After Deployment
+
+Users can continue by:
+
+- Connecting production applications through the cluster endpoint
+- Monitoring replica health, storage, and restart behavior
+- Testing failover procedures in a controlled environment
+- Pairing the cluster with higher-traffic microservices or production monoliths

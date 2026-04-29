@@ -1,0 +1,43 @@
+---
+title: Single MySQL Database
+description: Guide users through provisioning a standalone MySQL database on Autonomous.
+---
+
+import { Callout, Steps } from "nextra/components";
+
+# Single MySQL Database
+
+Use this guide when users need one MySQL instance with persistent storage and simple internal access.
+
+<Callout type="info">
+  Recommended deployment mode: **Single Database**. This is a good fit for
+  development, staging, and smaller production workloads.
+</Callout>
+
+## Provisioning Flow
+
+<Steps>
+
+### Start a Database Deployment
+
+Open the database flow in Autonomous instead of the source-code deployment flow.
+
+### Select MySQL
+
+Choose MySQL, then define version, database name, user, password, storage size, and target environment.
+
+### Choose Single Instance
+
+Select the standalone topology so Autonomous provisions one stateful database node with persistent storage.
+
+### Validate Connectivity
+
+Once ready, confirm internal access, credentials, and storage attachment from the dashboard.
+
+</Steps>
+
+## Common User Mistakes
+
+- Weak or reused passwords
+- Under-sized storage
+- Applications still using outdated credentials after rotation

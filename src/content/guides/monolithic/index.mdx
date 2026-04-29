@@ -1,0 +1,84 @@
+---
+title: Monolithic Deployment Guides
+description: Step-by-step guides for deploying single-unit applications on Autonomous.
+sidebarTitle: Monolithic
+asIndexPage: true
+---
+
+import { Callout } from "nextra/components";
+
+# Monolithic Deployment Guides
+
+Use this section when the application should deploy as a single release unit: one repository flow, one container image, one Kubernetes Deployment, and one Service.
+
+<Callout type="info">
+  Monolithic deployment is usually the fastest path for web apps, internal
+  tools, admin dashboards, and standalone APIs.
+</Callout>
+
+---
+
+## Available Guides
+
+<A8nCards columns={3}>
+  <A8nCard
+    title="Python App"
+    href="/docs/guides/monolithic/deploy-python"
+    description="Ship a generic Python service or web app as one monolithic deployment."
+    icon="code"
+  />
+  <A8nCard
+    title="Next.js App"
+    href="/docs/guides/monolithic/deploy-nextjs"
+    description="Ship a frontend or fullstack Next.js application as one monolithic deployment."
+    icon="rocket"
+  />
+  <A8nCard
+    title="React.js App"
+    href="/docs/guides/monolithic/deploy-reactjs"
+    description="React.js frontend as a single containerized application."
+    icon="globe"
+  />
+  <A8nCard
+    title="FastAPI App"
+    href="/docs/guides/monolithic/deploy-fastapi"
+    description="Run a FastAPI service with environment variables, port settings, and health validation."
+    icon="bolt"
+  />
+  <A8nCard
+    title="Flask App"
+    href="/docs/guides/monolithic/deploy-flask"
+    description="Flask application with simple Python runtime configuration."
+    icon="code"
+  />
+  <A8nCard
+    title="PHP App"
+    href="/docs/guides/monolithic/deploy-php"
+    description="Ship a traditional PHP web application as a single deployable workload."
+    icon="package"
+  />
+  <A8nCard
+    title="Laravel App"
+    href="/docs/guides/monolithic/deploy-laravel"
+    description="Laravel application with app keys, database settings, and runtime secrets."
+    icon="package"
+  />
+  <A8nCard
+    title="Spring Boot with Maven"
+    href="/docs/guides/monolithic/deploy-spring-boot-maven"
+    description="Run a Spring Boot service built with Maven as one monolithic deployment."
+    icon="package"
+  />
+  <A8nCard
+    title="Spring Boot with Gradle"
+    href="/docs/guides/monolithic/deploy-spring-boot-gradle"
+    description="Gradle-based Spring Boot service with explicit Java runtime settings."
+    icon="package"
+  />
+  <A8nCard
+    title="Node.js App"
+    href="/docs/guides/monolithic/deploy-nodejs"
+    description="Deploy an Express, Koa, or plain Node.js app as one release unit."
+    icon="terminal"
+  />
+</A8nCards>

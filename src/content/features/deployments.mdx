@@ -3,11 +3,66 @@ title: Deployments
 description: Deploy monoliths, microservices, and databases — with full support for Helm, GitOps, rollbacks, and automated pipelines.
 ---
 
-import { Tabs, Callout, Steps } from 'nextra/components'
+import { Tabs, Callout, Steps } from "nextra/components";
 
 # Deployments
 
 Autonomous supports multiple deployment modes depending on your project type and requirements.
+
+<Callout type="info">
+  For the full system view behind these workflows, see
+  <a href="/docs/features/platform-architecture"> Platform Architecture</a>.
+</Callout>
+
+---
+
+## End-to-End Deployment Flow
+
+```text
+Manual deploy / Git push
+  -> Autonomous control plane
+  -> Jenkins build and test
+  -> Harbor image registry
+  -> ArgoCD sync
+  -> Kubernetes rollout
+  -> Prometheus, Grafana, Loki, Alertmanager
+```
+
+Every deployment follows the same high-level path: Autonomous creates a release, stores an immutable artifact, updates the desired runtime state, and then watches rollout health from the platform dashboard.
+
+---
+
+## What Autonomous Provisions
+
+| Workload Type    | Artifact Output                           | Kubernetes Resources                                     | Shared Platform Services           |
+| ---------------- | ----------------------------------------- | -------------------------------------------------------- | ---------------------------------- |
+| **Monolith**     | One Docker image                          | Deployment, Service, ConfigMap, Ingress, HPA             | Vault, Harbor, ArgoCD, Prometheus  |
+| **Microservice** | One image per service                     | Per-service Deployment, Service, ConfigMap, optional HPA | Vault, Harbor, ArgoCD, Prometheus  |
+| **Database**     | Database container and persistent volumes | StatefulSet, Service, PVC, optional headless Service     | Vault, monitoring, backup workflow |
+
+---
+
+## Release Stages
+
+<Steps>
+
+### Trigger a Release
+
+Start from a dashboard action, CLI command, or Git event. Autonomous records the release metadata and resolves the target environment before any cluster changes happen.
+
+### Build an Immutable Artifact
+
+Jenkins builds the container image, applies tags, and publishes the result to Harbor so the exact same artifact can be rolled out, redeployed, or rolled back later.
+
+### Sync Desired State
+
+ArgoCD applies Helm charts or manifests into Kubernetes. ConfigMaps, secrets from Vault, Services, and workloads are reconciled together.
+
+### Watch the Rollout
+
+Autonomous streams build logs, rollout status, pod health, and follow-up monitoring so operators can tell whether the release reached a healthy steady state.
+
+</Steps>
 
 ---
 
@@ -70,7 +125,8 @@ Each service gets its own Deployment, Service, ConfigMap, and Vault secrets. Ser
 </Steps>
 
 <Callout type="info">
-  Each service can be redeployed, scaled, or rolled back **independently** — without affecting other services in the project.
+  Each service can be redeployed, scaled, or rolled back **independently** —
+  without affecting other services in the project.
 </Callout>
 
 ---
@@ -81,7 +137,7 @@ Each service gets its own Deployment, Service, ConfigMap, and Vault secrets. Ser
   <Tabs.Tab>
     ### Single Database
 
-    Deploy a standalone database as a Kubernetes **StatefulSet**. Suitable for dev and staging environments.
+    standalone database as a Kubernetes **StatefulSet**. Suitable for dev and staging environments.
 
     **Supported:** PostgreSQL · MySQL · MongoDB
 
@@ -92,11 +148,12 @@ Each service gets its own Deployment, Service, ConfigMap, and Vault secrets. Ser
     5. Kubernetes Service created for internal cluster access
     6. Credentials injected into app pods via Vault at deploy time
     7. Data persists across pod restarts via the PVC
+
   </Tabs.Tab>
   <Tabs.Tab>
     ### Cluster Database (High Availability)
 
-    Deploy a multi-replica database cluster for **production** workloads with automatic failover.
+    multi-replica database cluster for **production** workloads with automatic failover.
 
     1. Select database type and enable **cluster mode**
     2. Configure replica count (e.g., 1 primary + 2 replicas), storage size, and credentials
@@ -107,6 +164,7 @@ Each service gets its own Deployment, Service, ConfigMap, and Vault secrets. Ser
     7. Kubernetes headless Service enables stable DNS per pod
     8. If primary fails → replica is promoted automatically
     9. App connects via cluster endpoint injected from Vault
+
   </Tabs.Tab>
 </Tabs>
 
@@ -121,6 +179,7 @@ Git push → ArgoCD detects change → Syncs to Kubernetes cluster
 ```
 
 **Benefits:**
+
 - Full audit trail of every infrastructure change via Git history
 - Pull-request-based infrastructure reviews
 - Automatic rollback by reverting a Git commit
@@ -149,7 +208,8 @@ Pick any previous version from your **Version History** and immediately redeploy
 7. Rollback event logged in deployment history
 
 <Callout type="warning">
-  Rollback is instant — it does not trigger a new build. The exact image from that version is reused from Harbor.
+  Rollback is instant — it does not trigger a new build. The exact image from
+  that version is reused from Harbor.
 </Callout>
 
 ---
@@ -163,3 +223,36 @@ Every deployment is recorded with:
 - Target environment
 - Deployment status
 - Who triggered the deployment
+
+---
+
+## Practical Deployment Guides
+
+If your users need step-by-step walkthroughs instead of platform concepts, send them to:
+
+<A8nCards columns={2}>
+  <A8nCard
+    title="Monolithic Guides"
+    href="/docs/guides/monolithic"
+    description="Framework-specific guides for single-unit applications such as Next.js and Spring Boot."
+    icon="package"
+  />
+  <A8nCard
+    title="Microservices Guides"
+    href="/docs/guides/microservices"
+    description="Service-by-service deployment walkthroughs for independently released backend systems."
+    icon="branch"
+  />
+  <A8nCard
+    title="Single Database Guides"
+    href="/docs/guides/single-database"
+    description="Standalone stateful database deployment guides with persistent storage and simple topology."
+    icon="database"
+  />
+  <A8nCard
+    title="Database Cluster Guides"
+    href="/docs/guides/database-cluster"
+    description="High-availability database walkthroughs for replicas, failover, and resilient production setups."
+    icon="layers"
+  />
+</A8nCards>

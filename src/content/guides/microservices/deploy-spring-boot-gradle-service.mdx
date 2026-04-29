@@ -1,0 +1,50 @@
+---
+title: Spring Boot Microservice with Gradle
+description: Guide users through deploying one Gradle-based Spring Boot service in a microservice project.
+---
+
+import { Callout, Steps } from "nextra/components";
+
+# Spring Boot Microservice with Gradle
+
+Use this guide when a Gradle-based Spring Boot service needs to deploy independently inside a microservice project.
+
+<Callout type="info">
+  Recommended deployment mode: **Microservice**. This gives the service its own
+  build, scale, and rollback lifecycle.
+</Callout>
+
+## What Users Should Prepare
+
+- A multi-service repository
+- The exact Gradle service subfolder
+- A `Dockerfile` and correct artifact path for the service JAR
+- Environment variables and secrets specific to this service
+
+## Dashboard Deployment Flow
+
+<Steps>
+
+### Connect and Choose Microservice
+
+Create the project in Autonomous, connect the repository, and choose the microservice deployment model.
+
+### Define the Spring Boot Gradle Service
+
+Set the service name, code path, Dockerfile path, and runtime port for the Gradle-based service.
+
+### Add Service Configuration
+
+Store profile values, database settings, and other secrets through the Autonomous UI.
+
+### Deploy and Verify
+
+Deploy the release and verify logs, startup health, and service-to-service connectivity for the targeted service.
+
+</Steps>
+
+## Common User Mistakes
+
+- The Dockerfile points to the wrong Gradle output artifact
+- Multiple services accidentally share one port definition
+- Service-specific secrets are missing because they were never scoped per service

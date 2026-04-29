@@ -1,0 +1,43 @@
+---
+title: Single Redis Instance
+description: Guide users through provisioning a standalone Redis instance on Autonomous.
+---
+
+import { Callout, Steps } from "nextra/components";
+
+# Single Redis Instance
+
+Use this guide when users need Redis for cache, queue, session, or lightweight data access as one standalone instance.
+
+<Callout type="info">
+  Recommended deployment mode: **Single Database**. This is ideal for simple
+  Redis-backed workloads that do not require clustered resilience.
+</Callout>
+
+## Provisioning Flow
+
+<Steps>
+
+### Open the Database Deployment Flow
+
+Choose the database path in Autonomous instead of a source-code project.
+
+### Select Redis
+
+Configure version, memory and storage expectations if persistence is enabled, credentials if used, and the target environment.
+
+### Choose Single Instance
+
+Select the standalone topology so one Redis workload is provisioned for the environment.
+
+### Validate Connectivity
+
+Confirm internal access, readiness, and application connection settings after deployment finishes.
+
+</Steps>
+
+## Common User Mistakes
+
+- Treating a single Redis instance as highly available
+- Not planning for persistence strategy
+- Application clients still using local development endpoints

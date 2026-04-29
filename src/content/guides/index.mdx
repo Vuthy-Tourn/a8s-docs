@@ -1,0 +1,68 @@
+---
+title: Deployment Guides
+description: Browse deployment guides by workload type and platform architecture pattern.
+sidebarTitle: Guides
+asIndexPage: true
+---
+
+import { Callout } from 'nextra/components'
+
+# Deployment Guides
+
+These guides are grouped by deployment model so users can start from the shape of their workload first, then choose the detailed walkthrough that fits their stack.
+
+<Callout type="info">
+  If users already know whether they are deploying a monolith, a microservice system, or a database topology, start from the matching section below.
+</Callout>
+
+---
+
+## Browse by Deployment Type
+
+<A8nCards columns={2}>
+  <A8nCard
+    title="Monolithic Guides"
+    href="/docs/guides/monolithic"
+    description="Single application deployments such as Next.js, Spring Boot, and standalone backend services."
+    icon="package"
+  />
+  <A8nCard
+    title="Microservices Guides"
+    href="/docs/guides/microservices"
+    description="Multi-service deployments where each service is built, released, and scaled independently."
+    icon="branch"
+  />
+  <A8nCard
+    title="Single Database Guides"
+    href="/docs/guides/single-database"
+    description="Stateful database deployments for development, staging, or lightweight production use."
+    icon="database"
+  />
+  <A8nCard
+    title="Database Cluster Guides"
+    href="/docs/guides/database-cluster"
+    description="High-availability database topologies with replicas, failover, and resilient storage."
+    icon="layers"
+  />
+</A8nCards>
+
+---
+
+## How to Choose the Right Group
+
+| Deployment Type | Best for | Typical platform resources |
+|---|---|---|
+| **Monolithic** | One app shipped as one release unit | One image, one Deployment, one Service |
+| **Microservices** | Multiple independently deployable services | One image and one Deployment per service |
+| **Single Database** | Simple stateful workloads | One StatefulSet, one PVC, one internal Service |
+| **Database Cluster** | Production-grade resilient storage | Multiple replicas, per-node PVCs, cluster service topology |
+
+---
+
+## Recommended User Journey
+
+1. Start with [Getting Started](/docs/getting-started)
+2. Choose a guide group based on the workload type
+3. Follow a framework-specific or topology-specific guide
+4. Review [Deployments](/docs/features/deployments) for rollback, redeploy, and GitOps behavior
+5. Use [Monitoring & Observability](/docs/features/monitoring) once the workload is live

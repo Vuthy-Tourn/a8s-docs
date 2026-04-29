@@ -1,0 +1,50 @@
+---
+title: Spring Boot App with Maven
+description: Guide users through deploying a Maven-based Spring Boot service on Autonomous.
+---
+
+import { Callout, Steps } from "nextra/components";
+
+# Spring Boot App with Maven
+
+Use this guide for Spring Boot services built with Maven that should ship as one monolithic application.
+
+<Callout type="info">
+  Recommended deployment mode: **Monolith**. This keeps the release process
+  simple for one Java service.
+</Callout>
+
+## What Users Should Prepare
+
+- A Spring Boot repository with `pom.xml`
+- A `Dockerfile` that packages the built JAR into a runnable container
+- Runtime config such as `SPRING_PROFILES_ACTIVE` and database settings
+- Resource requests and limits appropriate for a Java workload
+
+## Dashboard Deployment Flow
+
+<Steps>
+
+### Connect Source
+
+Create a monolithic project and connect the Maven-based Spring Boot repository.
+
+### Configure Build
+
+Set the Dockerfile path, build context, and correct application subfolder if the code is part of a monorepo.
+
+### Add Runtime Configuration
+
+Store environment variables, profile settings, and secrets through Autonomous so Vault can inject them safely.
+
+### Deploy and Validate
+
+Deploy the service, then inspect logs, startup behavior, and the exposed endpoint on the generated URL.
+
+</Steps>
+
+## Common User Mistakes
+
+- The Dockerfile points at the wrong JAR output path
+- Java memory settings exceed container limits
+- The application listens on a different port than the one configured in Autonomous

@@ -1,0 +1,39 @@
+---
+title: MongoDB Cluster
+description: Guide users through provisioning a resilient MongoDB cluster on Autonomous.
+---
+
+import { Callout, Steps } from "nextra/components";
+
+# MongoDB Cluster
+
+Use this guide when users need MongoDB with a replica-based topology for higher availability and better production resilience.
+
+<Callout type="info">
+  Recommended deployment mode: **Database Cluster**. This is the right fit for
+  production MongoDB workloads that cannot rely on one standalone node.
+</Callout>
+
+## Provisioning Flow
+
+<Steps>
+
+### Start the Database Workflow
+
+Open the database deployment flow and select MongoDB.
+
+### Configure Cluster Topology
+
+Choose the clustered option, set replica count, storage size per node, credentials, and environment.
+
+### Deploy and Validate
+
+Provision the cluster, then verify replica health, internal endpoint connectivity, and storage attachment for each node.
+
+</Steps>
+
+## Common User Mistakes
+
+- Application clients connect to a single pod instead of the intended cluster endpoint
+- Replicas are provisioned without enough storage planning
+- Users assume clustering replaces backup and restore planning

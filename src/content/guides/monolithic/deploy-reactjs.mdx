@@ -1,0 +1,50 @@
+---
+title: React.js App
+description: Guide users through deploying a React.js frontend on Autonomous.
+---
+
+import { Callout, Steps } from "nextra/components";
+
+# React.js App
+
+Use this guide when the application is a React.js frontend packaged as a single deployable website or SPA.
+
+<Callout type="info">
+  Recommended deployment mode: **Monolith**. This keeps the frontend release
+  flow simple and predictable.
+</Callout>
+
+## What Users Should Prepare
+
+- A Git repository containing the React.js app
+- A build definition that produces static assets or a simple frontend server
+- Environment variables such as API base URLs or public keys
+- A container port and Dockerfile if the frontend is served through a container
+
+## Dashboard Deployment Flow
+
+<Steps>
+
+### Connect Source
+
+Create a new Autonomous project and choose the React.js repository.
+
+### Configure the Frontend Build
+
+Set the branch, Dockerfile path, and build folder if the frontend is inside a monorepo.
+
+### Add Environment Variables
+
+Enter runtime variables through Autonomous instead of hardcoding them in the repository.
+
+### Deploy and Verify
+
+Deploy the app, then validate the generated URL, browser loading behavior, and frontend asset delivery.
+
+</Steps>
+
+## Common User Mistakes
+
+- The build expects a different environment variable prefix than the one configured
+- The wrong subfolder is selected in a monorepo
+- The app is built successfully but serves the wrong base path at runtime

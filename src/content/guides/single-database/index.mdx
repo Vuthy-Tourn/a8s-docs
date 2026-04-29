@@ -1,0 +1,66 @@
+---
+title: Single Database Deployment Guides
+description: Guides for provisioning standalone stateful databases on Autonomous.
+sidebarTitle: Single Database
+asIndexPage: true
+---
+
+import { Callout } from "nextra/components";
+
+# Single Database Deployment Guides
+
+Use this section when users need a standalone database instance with persistent storage, simple connectivity, and low operational overhead.
+
+<Callout type="info">
+  Single database deployments are a strong fit for development, test, staging,
+  and smaller production workloads that do not need replica failover.
+</Callout>
+
+---
+
+## Available Guides
+
+<A8nCards columns={3}>
+  <A8nCard
+    title="Single PostgreSQL Database"
+    href="/docs/guides/single-database/deploy-postgresql-single"
+    description="Provision PostgreSQL as a single StatefulSet with one persistent volume and Vault-managed credentials."
+    icon="database"
+  />
+  <A8nCard
+    title="Single MySQL Database"
+    href="/docs/guides/single-database/deploy-mysql-single"
+    description="Provision MySQL as a standalone database with internal service access and persistent storage."
+    icon="database"
+  />
+  <A8nCard
+    title="Single SQL Server Database"
+    href="/docs/guides/single-database/deploy-sqlserver-single"
+    description="Run Microsoft SQL Server as a single stateful workload with secured credentials."
+    icon="database"
+  />
+  <A8nCard
+    title="Single Cassandra Node"
+    href="/docs/guides/single-database/deploy-cassandra-single"
+    description="Provision a single-node Cassandra workload for development and early integration testing."
+    icon="database"
+  />
+  <A8nCard
+    title="Single Oracle Database"
+    href="/docs/guides/single-database/deploy-oracle-single"
+    description="Deploy Oracle as one managed stateful workload with environment-specific secrets."
+    icon="database"
+  />
+  <A8nCard
+    title="Single MongoDB Database"
+    href="/docs/guides/single-database/deploy-mongodb-single"
+    description="Run MongoDB as a standalone database with persistent volumes and internal connectivity."
+    icon="database"
+  />
+  <A8nCard
+    title="Single Redis Instance"
+    href="/docs/guides/single-database/deploy-redis-single"
+    description="Provision Redis for cache, queue, or lightweight data access as a single instance."
+    icon="database"
+  />
+</A8nCards>

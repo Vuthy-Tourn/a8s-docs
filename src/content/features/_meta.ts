@@ -1,6 +1,7 @@
 import type { MetaRecord } from 'nextra'
 
 const meta: MetaRecord = {
+  'platform-architecture': 'Platform Architecture',
   'core-features': 'Core Features',
   authentication: 'Authentication & Account',
   'projects-environments': 'Projects & Environments',

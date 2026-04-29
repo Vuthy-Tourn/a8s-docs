@@ -1,0 +1,43 @@
+---
+title: Single MongoDB Database
+description: Guide users through provisioning a standalone MongoDB deployment on Autonomous.
+---
+
+import { Callout, Steps } from "nextra/components";
+
+# Single MongoDB Database
+
+Use this guide when users need one MongoDB instance with persistent storage and internal application access.
+
+<Callout type="info">
+  Recommended deployment mode: **Single Database**. This is suitable for
+  development, staging, and modest production use cases.
+</Callout>
+
+## Provisioning Flow
+
+<Steps>
+
+### Start the Database Flow
+
+Choose the Autonomous database deployment workflow.
+
+### Select MongoDB
+
+Configure version, database name if applicable, credentials, storage size, and environment.
+
+### Choose a Standalone Topology
+
+Use single-instance mode so one MongoDB stateful workload is provisioned with persistent storage.
+
+### Validate the Database
+
+Check internal connection details, startup logs, and storage health from the dashboard.
+
+</Steps>
+
+## Common User Mistakes
+
+- Exposing MongoDB externally without a strong need
+- Forgetting to rotate credentials in connected apps
+- Underestimating storage growth for document-heavy workloads

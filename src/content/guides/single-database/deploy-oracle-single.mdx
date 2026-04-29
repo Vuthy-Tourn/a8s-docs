@@ -1,0 +1,43 @@
+---
+title: Single Oracle Database
+description: Guide users through provisioning a standalone Oracle database on Autonomous.
+---
+
+import { Callout, Steps } from "nextra/components";
+
+# Single Oracle Database
+
+Use this guide when users need Oracle as one managed stateful workload on Autonomous.
+
+<Callout type="info">
+  Recommended deployment mode: **Single Database**. This provides a simple
+  topology for one Oracle runtime per environment.
+</Callout>
+
+## Provisioning Flow
+
+<Steps>
+
+### Open the Database Workflow
+
+Choose the database deployment path from the Autonomous dashboard.
+
+### Select Oracle
+
+Enter version details, admin credentials, storage size, and the target environment.
+
+### Provision a Single Instance
+
+Use the standalone topology so Autonomous deploys one Oracle workload with persistent state.
+
+### Validate Access
+
+Confirm internal connectivity, storage attachment, and credential delivery after provisioning finishes.
+
+</Steps>
+
+## Common User Mistakes
+
+- Missing resource sizing for heavier Oracle workloads
+- Weak credential practices
+- Application teams using local connection strings instead of platform-provided values

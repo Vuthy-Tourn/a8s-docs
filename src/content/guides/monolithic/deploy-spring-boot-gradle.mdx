@@ -1,0 +1,50 @@
+---
+title: Spring Boot App with Gradle
+description: Guide users through deploying a Gradle-based Spring Boot service on Autonomous.
+---
+
+import { Callout, Steps } from "nextra/components";
+
+# Spring Boot App with Gradle
+
+Use this guide for Spring Boot services built with Gradle that should deploy as one application.
+
+<Callout type="info">
+  Recommended deployment mode: **Monolith**. This fits one Spring Boot service,
+  one image, and one rollout lifecycle.
+</Callout>
+
+## What Users Should Prepare
+
+- A Spring Boot repository with `build.gradle` or `build.gradle.kts`
+- A container image build process for the produced JAR
+- Runtime config and secrets stored in Autonomous
+- CPU and memory sizing appropriate for Java startup and workload needs
+
+## Dashboard Deployment Flow
+
+<Steps>
+
+### Connect the Repository
+
+Create a new project and connect the Gradle-based Spring Boot service.
+
+### Configure Build Inputs
+
+Set the Dockerfile, build path, and repository subfolder when needed.
+
+### Configure Runtime Variables
+
+Add profile, database, and secret configuration values through the platform dashboard.
+
+### Deploy and Review
+
+Run the deployment and verify logs, rollout health, and endpoint readiness from the Autonomous UI.
+
+</Steps>
+
+## Common User Mistakes
+
+- The built artifact path differs from what the Dockerfile expects
+- JVM settings are copied from local development and do not fit the container runtime
+- Environment-specific Spring values are not provided through Autonomous

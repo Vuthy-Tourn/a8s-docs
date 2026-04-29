@@ -1,0 +1,50 @@
+---
+title: Laravel App
+description: Guide users through deploying a Laravel application on Autonomous.
+---
+
+import { Callout, Steps } from "nextra/components";
+
+# Laravel App
+
+Use this guide for Laravel applications that run as one monolithic web workload.
+
+<Callout type="info">
+  Recommended deployment mode: **Monolith**. This fits most Laravel apps with
+  one codebase and one web entry point.
+</Callout>
+
+## What Users Should Prepare
+
+- A Laravel repository
+- A `Dockerfile` that installs PHP dependencies and configures the web runtime
+- Values such as `APP_KEY`, database settings, queue configuration, and cache settings
+- A persistent plan for uploads if the app stores user files
+
+## Dashboard Deployment Flow
+
+<Steps>
+
+### Connect the Repository
+
+Create a new project in Autonomous and connect the Laravel codebase.
+
+### Configure Build and Runtime
+
+Set the Dockerfile path, server port, and any monorepo subfolder values.
+
+### Add Environment Variables
+
+Enter `APP_KEY`, database connection variables, mail settings, and other Laravel runtime values through Autonomous.
+
+### Deploy and Verify
+
+Deploy the app, then validate the home page, logs, database connectivity, and any cache or queue integrations.
+
+</Steps>
+
+## Common User Mistakes
+
+- `APP_KEY` is missing in the deployed environment
+- The container serves static pages but fails on database-backed routes
+- Queue or cache backends are configured locally but not in Autonomous

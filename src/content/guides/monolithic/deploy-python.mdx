@@ -1,0 +1,50 @@
+---
+title: Python App
+description: Guide users through deploying a generic Python application on Autonomous.
+---
+
+import { Callout, Steps } from "nextra/components";
+
+# Python App
+
+Use this guide for a generic Python service or web application that should ship as one monolithic workload.
+
+<Callout type="info">
+  Recommended deployment mode: **Monolith**. This fits Python apps that run as
+  one container and one Kubernetes Deployment.
+</Callout>
+
+## What Users Should Prepare
+
+- A Git repository containing the Python app
+- A `Dockerfile` or a build flow that packages Python dependencies correctly
+- A startup command such as `gunicorn`, `uvicorn`, or `python app.py`
+- Runtime variables, ports, and secret values stored through Autonomous
+
+## Dashboard Deployment Flow
+
+<Steps>
+
+### Connect the Repository
+
+Create a new project in Autonomous and link the repository that contains the Python app.
+
+### Choose Monolith
+
+Select **Monolith** so Autonomous builds one image and deploys one workload for the application.
+
+### Configure Build and Runtime
+
+Set the Dockerfile path, working folder, exposed port, and required environment variables.
+
+### Deploy and Validate
+
+Trigger the deployment, then confirm pod health, startup logs, and the generated URL from the dashboard.
+
+</Steps>
+
+## Common User Mistakes
+
+- The container starts locally but the production command is missing from the Docker image
+- The service listens on a different port than the one configured in Autonomous
+- Secrets are committed in code instead of stored in Vault

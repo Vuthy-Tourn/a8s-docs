@@ -1,0 +1,50 @@
+---
+title: Flask App
+description: Guide users through deploying a Flask application on Autonomous.
+---
+
+import { Callout, Steps } from "nextra/components";
+
+# Flask App
+
+Use this guide for Flask applications that should run as one monolithic web service.
+
+<Callout type="info">
+  Recommended deployment mode: **Monolith**. This is the simplest path for most
+  Flask-based internal tools and APIs.
+</Callout>
+
+## What Users Should Prepare
+
+- A Flask repository
+- A production startup command such as `gunicorn`
+- A `Dockerfile`
+- Runtime config values and secrets managed through Autonomous
+
+## Dashboard Deployment Flow
+
+<Steps>
+
+### Connect the Repository
+
+Create the project in Autonomous and authorize access to the Flask repository.
+
+### Set Build Details
+
+Point Autonomous to the correct Dockerfile and port used by the Flask runtime.
+
+### Configure Environment
+
+Add secret keys, database URLs, and environment names through the dashboard.
+
+### Deploy and Validate
+
+Run the deployment, then inspect logs, pod health, and web responses from the generated URL.
+
+</Steps>
+
+## Common User Mistakes
+
+- Using Flask development server settings in production
+- Forgetting to configure a production WSGI process
+- Missing secret keys or database variables at runtime

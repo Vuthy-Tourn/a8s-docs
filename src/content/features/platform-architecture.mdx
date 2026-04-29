@@ -1,0 +1,170 @@
+---
+title: Platform Architecture
+description: Understand how Autonomous coordinates identity, CI/CD, GitOps, secrets, runtime services, and observability for every deployment.
+---
+
+import { Callout, Steps, Tabs } from 'nextra/components'
+
+# Platform Architecture
+
+Autonomous is designed as an internal developer platform: developers interact with a clean dashboard or CLI, while the platform coordinates the services needed to build, release, secure, and observe workloads on Kubernetes.
+
+<Callout type="info">
+  Think of it as a Vercel-like developer experience for Kubernetes-native applications,
+  microservices, and databases.
+</Callout>
+
+---
+
+## Architecture at a Glance
+
+```text
+Developer / CLI / Git Provider
+          |
+          v
+  Autonomous UI + API layer
+          |
+  +-------+--------+--------+--------+
+  |                |                 |
+  v                v                 v
+Keycloak        Jenkins           Vault
+  |                |                 |
+  +---------+------+--------+--------+
+                    |
+                    v
+                 Harbor
+                    |
+                    v
+                 ArgoCD
+                    |
+                    v
+            Kubernetes Cluster
+                    |
+     +--------------+---------------+
+     |              |               |
+     v              v               v
+  Ingress      Workloads       Monitoring stack
+              (Deployments,    (Prometheus,
+               StatefulSets,    Grafana, Loki,
+               Services, HPA)   Alertmanager)
+```
+
+---
+
+## Service Responsibilities
+
+| Service | Responsibility | Why it matters |
+|---|---|---|
+| **Autonomous UI + API** | Accepts deploy requests, stores release metadata, coordinates workflows | Gives developers one operational surface instead of many tools |
+| **Keycloak** | Authentication, SSO, and identity brokering | Centralizes access control for the dashboard and protected actions |
+| **Jenkins** | Build, test, and image packaging pipeline | Turns source code into reproducible release artifacts |
+| **Harbor** | Private artifact registry | Stores immutable images for deploy, redeploy, and rollback |
+| **Vault** | Secret storage and secret delivery | Keeps environment credentials out of Git and out of platform databases |
+| **ArgoCD** | GitOps sync and reconciliation | Ensures cluster state matches the intended release definition |
+| **Kubernetes** | Runtime scheduling, networking, scaling, storage | Runs the actual application and database workloads |
+| **Prometheus / Grafana / Loki / Alertmanager** | Metrics, dashboards, logs, alerts | Makes every deployment observable from the moment it lands |
+
+---
+
+## Control Plane and Runtime Plane
+
+<Tabs items={['Control Plane', 'Runtime Plane', 'Observability']}>
+  <Tabs.Tab>
+    The control plane is where Autonomous coordinates release actions.
+
+    - User actions come from the dashboard, CLI, or repository events
+    - Authentication and authorization are enforced through Keycloak
+    - Deployment requests are translated into CI/CD and GitOps operations
+    - Build artifacts and release metadata are versioned for later rollback
+  </Tabs.Tab>
+  <Tabs.Tab>
+    The runtime plane is the Kubernetes environment that serves traffic.
+
+    - Applications run as Deployments or StatefulSets
+    - Services and Ingress route traffic internally and externally
+    - ConfigMaps and Vault-backed secrets provide runtime configuration
+    - Horizontal Pod Autoscalers adjust capacity based on live signals
+  </Tabs.Tab>
+  <Tabs.Tab>
+    Observability is built into the deployment path rather than added afterward.
+
+    - Prometheus scrapes workload and infrastructure metrics
+    - Grafana renders runtime dashboards scoped to deployed services
+    - Loki aggregates pod logs for search and live tailing
+    - Alertmanager routes threshold breaches to your configured channels
+  </Tabs.Tab>
+</Tabs>
+
+---
+
+## Deployment Journey
+
+<Steps>
+
+### Connect Source
+
+A GitHub or GitLab repository is linked to the project. Autonomous detects the project structure, repository branch, and environment target.
+
+### Build the Release
+
+Jenkins checks out the source, runs the build logic, creates a container image, and publishes it to Harbor with a version tag.
+
+### Prepare Runtime Configuration
+
+Environment values, secrets, and deployment configuration are assembled. Vault remains the source of truth for sensitive values.
+
+### Reconcile Into Kubernetes
+
+ArgoCD applies Helm charts or manifests so the cluster converges toward the desired release state in a repeatable way.
+
+### Verify Health
+
+Autonomous tracks rollout status, surfaces logs, and links the release to metrics and alerts so operators can confirm success quickly.
+
+</Steps>
+
+---
+
+## What Gets Created Per Deployment
+
+| Category | Typical resources |
+|---|---|
+| **Networking** | Service, Ingress, internal DNS records, TLS integration |
+| **Workloads** | Deployment or StatefulSet, replica strategy, rollout history |
+| **Configuration** | ConfigMaps, Vault-backed secrets, environment overlays |
+| **Scalability** | Resource requests and limits, HPA policies |
+| **Operations** | Metrics targets, log collection, alert rules, deployment history |
+
+---
+
+## Deployment Modes
+
+<A8nCards columns={3}>
+  <A8nCard
+    title="Monoliths"
+    href="/docs/features/deployments"
+    description="Ship a single application image with one workload, one service, and one deployment pipeline."
+    icon="package"
+  />
+  <A8nCard
+    title="Microservices"
+    href="/docs/features/deployments"
+    description="Deploy each service independently while keeping monitoring, secrets, and rollbacks consistent."
+    icon="branch"
+  />
+  <A8nCard
+    title="Databases"
+    href="/docs/features/deployments"
+    description="Run stateful workloads with persistent volumes, failover-aware topology, and Vault-managed credentials."
+    icon="database"
+  />
+</A8nCards>
+
+---
+
+## Why This Architecture Works
+
+- Developers keep a simple release flow while platform services handle specialized concerns.
+- GitOps preserves a clean audit trail and makes rollback predictable.
+- Shared services such as Vault, Harbor, and Prometheus stay reusable across projects.
+- The same architecture supports both fast-moving app teams and more regulated production environments.

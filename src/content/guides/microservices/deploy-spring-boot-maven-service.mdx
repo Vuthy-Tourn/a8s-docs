@@ -1,0 +1,50 @@
+---
+title: Spring Boot Microservice with Maven
+description: Guide users through deploying one Maven-based Spring Boot service in a microservice project.
+---
+
+import { Callout, Steps } from "nextra/components";
+
+# Spring Boot Microservice with Maven
+
+Use this guide when one Spring Boot service inside a multi-service repository should build and deploy independently.
+
+<Callout type="info">
+  Recommended deployment mode: **Microservice**. Each service gets its own
+  image, Deployment, Service, and rollout history.
+</Callout>
+
+## What Users Should Prepare
+
+- A repository containing multiple services
+- The exact subfolder for the Maven-based Spring Boot service
+- A `Dockerfile` for that service
+- Service-level runtime variables and secrets
+
+## Dashboard Deployment Flow
+
+<Steps>
+
+### Create a Microservice Project
+
+Connect the repository in Autonomous and choose **Microservice** as the project type.
+
+### Define the Service
+
+Enter the service name, repository subfolder, Dockerfile path, and runtime port for the Spring Boot Maven service.
+
+### Add Service-Specific Configuration
+
+Store database values, profile settings, and secrets for this service through Autonomous.
+
+### Deploy and Validate
+
+Deploy the project and confirm the Spring Boot service starts cleanly, exposes the correct port, and communicates with any required internal dependencies.
+
+</Steps>
+
+## Common User Mistakes
+
+- The service subfolder points to the wrong Maven module
+- One shared environment file is assumed for all services
+- The service starts, but internal DNS assumptions between microservices are wrong

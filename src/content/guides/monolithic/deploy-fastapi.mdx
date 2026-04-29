@@ -1,0 +1,50 @@
+---
+title: FastAPI App
+description: Guide users through deploying a FastAPI application on Autonomous.
+---
+
+import { Callout, Steps } from "nextra/components";
+
+# FastAPI App
+
+Use this guide for a FastAPI service that should run as one application container.
+
+<Callout type="info">
+  Recommended deployment mode: **Monolith**. This works well for API services
+  that expose one HTTP entry point.
+</Callout>
+
+## What Users Should Prepare
+
+- A FastAPI repository with a working `uvicorn` or `gunicorn` startup command
+- A `Dockerfile` with Python dependencies installed
+- A known port such as `8000`
+- Required secret values such as `DATABASE_URL` or API tokens
+
+## Dashboard Deployment Flow
+
+<Steps>
+
+### Create the Project
+
+Connect the FastAPI repository in Autonomous and start a new monolithic project.
+
+### Configure Port and Build Inputs
+
+Set the Dockerfile path, startup port, and any subfolder paths if the app is not at repository root.
+
+### Add Secrets and Runtime Variables
+
+Store all environment variables through Autonomous so Vault injects them safely at deploy time.
+
+### Deploy and Inspect Health
+
+Deploy the service and verify pod health, logs, and a basic API or health endpoint.
+
+</Steps>
+
+## Common User Mistakes
+
+- The app binds to `127.0.0.1` instead of `0.0.0.0`
+- The declared container port does not match the FastAPI runtime port
+- The image builds, but runtime dependencies are missing in the final container layer

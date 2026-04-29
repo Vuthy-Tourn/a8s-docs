@@ -62,10 +62,11 @@ If your project includes a `helm/` chart or a `kustomize/` overlay, Autonomous w
 
 Click **"Deploy"**. Autonomous will:
 
-1. Trigger a Jenkins CI pipeline to build your Docker image
-2. Push the image to your Harbor artifact registry
-3. Deploy the image to your Kubernetes cluster via ArgoCD
-4. Expose your application and return a live URL
+1. Trigger the Autonomous control plane to prepare a release
+2. Run a Jenkins CI pipeline to build your Docker image
+3. Push the versioned image to your Harbor artifact registry
+4. Sync the release into Kubernetes via ArgoCD
+5. Expose your application and return a live URL
 
 The entire process typically takes **2–4 minutes** depending on build complexity.
 
@@ -101,9 +102,15 @@ You're live. That's it.
     icon="env"
   />
   <A8nCard
-    title="CLI Reference"
-    href="/docs/references/cli-reference"
-    description="Full command reference for the A8n CLI tool."
-    icon="terminal"
+    title="Platform Architecture"
+    href="/docs/features/platform-architecture"
+    description="Understand how CI/CD, GitOps, Vault, and Kubernetes fit together."
+    icon="layers"
+  />
+  <A8nCard
+    title="Deployment Guides"
+    href="/docs/guides"
+    description="Browse grouped guides for monolithic apps, microservices, single databases, and clustered databases."
+    icon="book"
   />
 </A8nCards>

@@ -1,0 +1,48 @@
+---
+title: Database Cluster Deployment Guides
+description: Guides for high-availability database topologies on Autonomous.
+sidebarTitle: Database Cluster
+asIndexPage: true
+---
+
+import { Callout } from "nextra/components";
+
+# Database Cluster Deployment Guides
+
+Use this section when users need a resilient database deployment with replicas, failover behavior, and stronger production-readiness.
+
+<Callout type="info">
+  Database cluster deployments are intended for workloads where uptime, read
+  replicas, or automatic failover matter more than absolute simplicity.
+</Callout>
+
+---
+
+## Available Guides
+
+<A8nCards columns={2}>
+  <A8nCard
+    title="PostgreSQL Cluster"
+    href="/docs/guides/database-cluster/deploy-postgresql-cluster"
+    description="Provision a high-availability PostgreSQL topology with multiple replicas and persistent storage per node."
+    icon="layers"
+  />
+  <A8nCard
+    title="MySQL Cluster"
+    href="/docs/guides/database-cluster/deploy-mysql-cluster"
+    description="Provision a resilient MySQL topology with multiple replicas and production-oriented storage."
+    icon="layers"
+  />
+  <A8nCard
+    title="Cassandra Cluster"
+    href="/docs/guides/database-cluster/deploy-cassandra-cluster"
+    description="Run a distributed Cassandra topology with multiple nodes and cluster-aware storage planning."
+    icon="layers"
+  />
+  <A8nCard
+    title="MongoDB Cluster"
+    href="/docs/guides/database-cluster/deploy-mongodb-cluster"
+    description="Provision MongoDB replica-based clustering for resilient stateful application workloads."
+    icon="layers"
+  />
+</A8nCards>

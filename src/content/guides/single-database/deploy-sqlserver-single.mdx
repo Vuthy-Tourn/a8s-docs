@@ -1,0 +1,43 @@
+---
+title: Single SQL Server Database
+description: Guide users through provisioning a standalone SQL Server database on Autonomous.
+---
+
+import { Callout, Steps } from "nextra/components";
+
+# Single SQL Server Database
+
+Use this guide when users need Microsoft SQL Server as one stateful workload inside the platform.
+
+<Callout type="info">
+  Recommended deployment mode: **Single Database**. This keeps SQL Server
+  deployment simple for one environment.
+</Callout>
+
+## Provisioning Flow
+
+<Steps>
+
+### Choose the Database Flow
+
+Start from the database deployment workflow in Autonomous.
+
+### Select SQL Server
+
+Configure edition or version details, admin credentials, storage size, and the target environment.
+
+### Choose a Standalone Topology
+
+Use a single-instance setup so the platform provisions one stateful SQL Server workload with attached storage.
+
+### Validate Runtime Health
+
+Confirm readiness, internal connectivity, and credential delivery from the dashboard.
+
+</Steps>
+
+## Common User Mistakes
+
+- Missing strong admin credentials
+- Insufficient storage planning
+- Application connection strings not updated after provisioning

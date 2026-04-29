@@ -1,0 +1,39 @@
+---
+title: MySQL Cluster
+description: Guide users through provisioning a resilient MySQL cluster on Autonomous.
+---
+
+import { Callout, Steps } from "nextra/components";
+
+# MySQL Cluster
+
+Use this guide when users need a more resilient MySQL topology with replicas and stronger production-readiness.
+
+<Callout type="info">
+  Recommended deployment mode: **Database Cluster**. This is more appropriate
+  than a single instance when uptime and failover matter.
+</Callout>
+
+## Provisioning Flow
+
+<Steps>
+
+### Start the Database Workflow
+
+Open the database deployment flow and select MySQL as the engine.
+
+### Enable Cluster Topology
+
+Choose the clustered or HA option, then set replica count, storage size, credentials, and environment.
+
+### Provision and Validate
+
+Let Autonomous create the multi-node topology, then verify internal connectivity, replica health, and endpoint routing.
+
+</Steps>
+
+## Common User Mistakes
+
+- Insufficient storage planning per replica
+- Application traffic pointed at a single pod instead of the cluster endpoint
+- Assuming cluster mode removes the need for backups

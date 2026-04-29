@@ -1,0 +1,50 @@
+---
+title: PHP App
+description: Guide users through deploying a PHP application on Autonomous.
+---
+
+import { Callout, Steps } from "nextra/components";
+
+# PHP App
+
+Use this guide for traditional PHP applications that should deploy as one unit.
+
+<Callout type="info">
+  Recommended deployment mode: **Monolith**. This is the best fit for a single
+  PHP site or internal application runtime.
+</Callout>
+
+## What Users Should Prepare
+
+- A PHP application repository
+- A production-ready `Dockerfile`
+- Web server runtime details, such as Apache or Nginx plus PHP-FPM
+- Secrets and database settings managed through Autonomous
+
+## Dashboard Deployment Flow
+
+<Steps>
+
+### Connect Source
+
+Link the PHP repository to a new Autonomous project.
+
+### Configure Build Settings
+
+Set the Dockerfile path and confirm the web server entrypoint used by the container.
+
+### Add Runtime Configuration
+
+Store environment variables, app secrets, and database connection details in the platform.
+
+### Deploy and Review
+
+Deploy the application and confirm the web server responds correctly, logs are clean, and storage needs are satisfied.
+
+</Steps>
+
+## Common User Mistakes
+
+- The container exposes the wrong HTTP port
+- File permissions are incorrect inside the image
+- Application secrets are still expected from local `.env` files instead of Vault-injected values

@@ -1,0 +1,108 @@
+---
+title: Next.js App
+description: Guide users through deploying a Next.js application on Autonomous.
+---
+
+import { Callout, Steps } from "nextra/components";
+
+# Next.js App
+
+Use this guide when your users want to Next.js application as a single project on Autonomous.
+
+<Callout type="info">
+  Recommended deployment mode: **Monolith**. This is the best fit when the
+  frontend and its server runtime ship as one application.
+</Callout>
+
+---
+
+## What Users Should Prepare
+
+- A GitHub or GitLab repository containing the Next.js app
+- A `Dockerfile`, or a build that Autonomous can detect and containerize
+- A known port, usually `3000`
+- Environment variables such as `NEXT_PUBLIC_API_URL`, `DATABASE_URL`, or OAuth secrets
+
+---
+
+## Typical Repository Shape
+
+```text
+my-nextjs-app/
+├── app/ or pages/
+├── public/
+├── package.json
+├── next.config.js
+└── Dockerfile
+```
+
+If the repository contains both frontend and backend code, users should verify which folder or Dockerfile path Autonomous should build.
+
+---
+
+## Dashboard Deployment Flow
+
+<Steps>
+
+### Create a New Project
+
+Open the Autonomous dashboard, click **New Project**, and connect the repository that contains the Next.js application.
+
+### Select Monolith
+
+Choose **Monolith** as the project type so Autonomous creates a single image and a single Kubernetes Deployment for the app.
+
+### Configure the Build
+
+Set the repository branch, Dockerfile path, and build context if the project is not at the repository root.
+
+### Set Runtime Values
+
+Use port `3000` unless the app is configured differently. Add all required environment variables through the Autonomous UI so they are stored in Vault.
+
+### Deploy
+
+Click **Deploy**. Autonomous will build the image, push it to Harbor, sync the release through ArgoCD, and expose the app through Kubernetes networking.
+
+### Verify the Release
+
+Open the deployment details page and confirm the pod is healthy, logs are clean, and the generated URL returns the app successfully.
+
+</Steps>
+
+---
+
+## Recommended Runtime Settings
+
+| Setting          | Suggested value                                        |
+| ---------------- | ------------------------------------------------------ |
+| **Project Type** | Monolith                                               |
+| **Port**         | `3000`                                                 |
+| **Environment**  | `dev` first, then promote to `staging` or `production` |
+| **Secrets**      | Store in Vault through Autonomous                      |
+| **Scaling**      | Start with 1 replica, then enable HPA if traffic grows |
+
+---
+
+## Common User Mistakes
+
+- The app listens on a different port than the one entered in Autonomous
+- Required environment variables are missing at runtime
+- The Dockerfile builds successfully locally but uses the wrong working directory in CI
+- The repository root is selected even though the Next.js app is inside a subfolder
+
+<Callout type="warning">
+  If users see a successful build but a failing rollout, check the container
+  port and required runtime environment variables first.
+</Callout>
+
+---
+
+## After Deployment
+
+Once the app is live, users can:
+
+- Tail logs from the dashboard
+- Monitor CPU and memory usage
+- Roll back to a previous version from deployment history
+- Promote the same release pattern to `staging` and `production`

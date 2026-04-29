@@ -1,0 +1,50 @@
+---
+title: Node.js App
+description: Guide users through deploying a Node.js application on Autonomous.
+---
+
+import { Callout, Steps } from "nextra/components";
+
+# Node.js App
+
+Use this guide for Express, Koa, or plain Node.js applications that should run as one deployable service.
+
+<Callout type="info">
+  Recommended deployment mode: **Monolith**. This is a good fit for one Node.js
+  app with one public entry point.
+</Callout>
+
+## What Users Should Prepare
+
+- A Node.js repository
+- A `Dockerfile`
+- A known listening port such as `3000`
+- Runtime variables, secrets, and any database connection settings
+
+## Dashboard Deployment Flow
+
+<Steps>
+
+### Connect Source
+
+Create a new project in Autonomous and connect the Node.js repository.
+
+### Configure Build and Port
+
+Set the Dockerfile path, build context, and runtime port used by the application.
+
+### Add Secrets
+
+Store `NODE_ENV`, API tokens, database values, and other secrets through Autonomous.
+
+### Deploy and Validate
+
+Deploy the app and confirm pod health, startup logs, and application responses from the generated URL.
+
+</Steps>
+
+## Common User Mistakes
+
+- The app listens only on `localhost`
+- The configured port and actual runtime port do not match
+- Required secrets are missing because the app still expects a local `.env` file

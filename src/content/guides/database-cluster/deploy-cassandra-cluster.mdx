@@ -1,0 +1,39 @@
+---
+title: Cassandra Cluster
+description: Guide users through provisioning a Cassandra cluster on Autonomous.
+---
+
+import { Callout, Steps } from "nextra/components";
+
+# Cassandra Cluster
+
+Use this guide when users need Cassandra as a distributed, multi-node database topology.
+
+<Callout type="info">
+  Recommended deployment mode: **Database Cluster**. Cassandra is generally most
+  useful when it runs as a real cluster, not a single development node.
+</Callout>
+
+## Provisioning Flow
+
+<Steps>
+
+### Select Cassandra in the Database Flow
+
+Start from the Autonomous database workflow and choose Cassandra as the engine.
+
+### Configure Cluster Size
+
+Set node count, storage size, and any seed or topology values required by your platform defaults.
+
+### Provision and Validate
+
+Deploy the cluster, then confirm node health, storage allocation, and internal connectivity across the cluster.
+
+</Steps>
+
+## Common User Mistakes
+
+- Too few nodes for expected data or resilience needs
+- Poor storage sizing for write-heavy workloads
+- Application consistency expectations not matched to the deployed cluster behavior

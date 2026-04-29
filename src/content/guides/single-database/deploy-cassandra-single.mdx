@@ -1,0 +1,43 @@
+---
+title: Single Cassandra Cluster Node
+description: Guide users through provisioning a single-node Cassandra deployment on Autonomous.
+---
+
+import { Callout, Steps } from "nextra/components";
+
+# Single Cassandra Cluster Node
+
+Use this guide for a lightweight Cassandra setup intended for development or early integration testing.
+
+<Callout type="info">
+  Recommended deployment mode: **Single Database**. A single Cassandra node is
+  useful for non-production validation, not resilient production traffic.
+</Callout>
+
+## Provisioning Flow
+
+<Steps>
+
+### Start a Database Deployment
+
+Open the database provisioning workflow in Autonomous.
+
+### Select Cassandra
+
+Choose Cassandra, configure version, storage, credentials if applicable, and environment details.
+
+### Choose Single Node
+
+Select the standalone topology so one Cassandra node is provisioned with persistent storage.
+
+### Validate Cluster Health
+
+Check readiness, seed configuration, and internal service connectivity from the dashboard.
+
+</Steps>
+
+## Common User Mistakes
+
+- Treating a single Cassandra node as HA-ready
+- Under-provisioning storage for write-heavy workloads
+- Skipping validation of application consistency expectations
